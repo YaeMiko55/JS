@@ -1,0 +1,142 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+</head>
+<style>
+  * {
+    margin: 0;
+    padding: 0;
+  }
+
+  .container {
+    width: 1200px;
+    height: 900px;
+    background-color: #eee;
+    margin: 50px auto;
+  }
+
+  .goods-img {
+    position: relative;
+  }
+
+  ul {
+    list-style: none;
+    width: 700px;
+    display: flex;
+    justify-content: space-evenly;
+    margin: 16px 0;
+  }
+
+  li>img {
+    height: 64px;
+    width: 138px;
+  }
+
+  li.active {
+    border: 2px solid skyblue;
+  }
+
+  .large {
+    height: 400px;
+    width: 400px;
+    background-color: pink;
+    position: absolute;
+    top: 0;
+    right: 50px;
+    display: none;
+  }
+
+  .zhezhao {
+    width: 200px;
+    height: 200px;
+    background-color: #0008;
+    position: absolute;
+    top: 0;
+    left: 0;
+    transform: translate(-400px, -400px);
+    display: none;
+  }
+</style>
+
+<body>
+  <div class="container">
+    <div class="goods-img">
+      <img src="../img/slide01.png" alt="" class="main">
+      <ul>
+        <li class="active">
+          <img src="../img/slide01.png" alt="">
+        </li>
+        <li>
+          <img src="../img/slide02.jpg" alt="">
+        </li>
+        <li>
+          <img src="../img/slide03.png" alt="">
+        </li>
+        <li>
+          <img src="../img/slide04.png" alt="">
+        </li>
+      </ul>
+      <div class="large"></div>
+      <div class="zhezhao"></div>
+    </div>
+    <div class="goods-param"></div>
+  </div>
+  <script>
+    // 当鼠标经过图片列表中的图片时切换主图片
+    const img_ul = document.querySelector('ul')
+    img_ul.addEventListener('mouseover', (e) => {
+      if (e.target.tagName === 'IMG') {
+        main_img.src = e.target.src
+        document.querySelector('li.active').classList.remove('active')
+        e.target.parentNode.classList.add('active')
+      }
+    })
+
+    // 鼠标移动到main-img上显示/隐藏放大镜盒子
+    const main_img = document.querySelector('img.main')
+    const large = document.querySelector('.large')
+    let timeId = 0
+    main_img.addEventListener('mouseenter', () => {
+      // 当鼠标移入主图片时清除历史计时器
+      clearTimeout(timeId)
+      large.style.display = 'block'
+    })
+    main_img.addEventListener('mouseleave', () => {
+      // 延迟200ms隐藏
+      timeId = setTimeout(() => {
+        large.style.display = 'none'
+      }, 200)
+    })
+
+    // 当鼠标移入主图片时 显示隐藏 遮罩
+    const zhezhao = document.querySelector('.zhezhao')
+    main_img.addEventListener('mouseenter', (e) => {
+      // 当鼠标移入主图片时清除历史计时器
+      clearTimeout(timeId)
+      zhezhao.style.display = 'block'
+
+    })
+    main_img.addEventListener('mouseleave', () => {
+      zhezhao.style.display = 'none'
+    })
+
+    // 遮罩跟随鼠标移动
+    main_img.addEventListener('mousemove', (e) => {
+      // 获取鼠标位置
+      let x = e.pageX - main_img.getBoundingClientRect().left + 400
+      let y = e.pageY - main_img.getBoundingClientRect().top - document.documentElement.scrollTop + 400
+      let mx = x + 'px'
+      let my = y + 'px'
+      // 更改遮罩位置
+      zhezhao.style.left = mx
+      zhezhao.style.top = my
+    })
+
+  </script>
+</body>
+
+</html>

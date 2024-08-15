@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>正则表达式的简单运用</title>
+</head>
+<body>
+  <div class="login">
+    <form action="javascript:">
+      <label for="username">用户名：</label>
+      <input type="text" name="username" id="username">
+      <span></span>
+      <br>
+      <label for="pwd">密&nbsp;&nbsp;&nbsp;码：</label>
+      <input type="password" name="pwd" id="pwd">
+      <span></span>
+    </form>
+  </div>
+  <script>
+    const usernameReg = /^[a-zA-Z0-9-_]{4,16}$/
+    const pwdReg = /^[\d\w\S]{6,16}/
+    const username = document.querySelector('#username')
+    const pwd = document.querySelector('#pwd')
+    username.addEventListener('blur',() => {
+      if (usernameReg.test(username.value)) {
+        username.nextElementSibling.innerHTML = '输入格式正确'
+      } else {
+        username.nextElementSibling.innerHTML = '输入格式错误'
+      }
+    })
+    pwd.addEventListener('blur',() => {
+      if (pwdReg.test(pwd.value)) {
+        pwd.nextElementSibling.innerHTML = '输入格式正确'
+      } else {
+        pwd.nextElementSibling.innerHTML = '输入格式错误'
+      }
+    })
+  </script>
+</body>
+</html>

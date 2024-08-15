@@ -1,0 +1,172 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+    }
+
+    html {
+      /* 让滚动条平滑滚动 */
+      scroll-behavior: smooth;
+
+      /* 问题：edge浏览器无法平滑移动 */
+    }
+
+    .main {
+      width: 100%;
+    }
+
+    .Top,
+    .F2,
+    .F3,
+    .F4 {
+      height: 1080px;
+      background-color: #e4e4e4;
+
+      & h2 {
+        height: 100px;
+        background-color: #666;
+        line-height: 100px;
+        padding-left: 40px;
+        overflow: hidden;
+        position: relative;
+        & .litebox {
+            height: 100%;
+            width: 100%;
+            background-color: #fff;
+            position: absolute;
+            top: -100%;
+            left: 0;
+            transition: all 1s;
+            &:hover {
+              background-color: pink;
+            }
+          }
+      }
+    }
+
+    .scroll-nav {
+      position: fixed;
+      bottom: 200px;
+      right: 20px;
+      transition: all .2s;
+
+      & ul {
+        list-style: none;
+        background-color: #d4d4d4;
+        position: relative;
+
+        & li {
+          height: 50px;
+          width: 50px;
+          line-height: 50px;
+          text-align: center;
+          font-weight: 600;
+          transition: all .2s;
+
+          &:hover {
+            background-color: #888;
+            color: #e4e4e4;
+          }
+        }
+        & li.active {
+            color: #e4e4e4;
+            background-color: #444;
+        }
+      }
+    }
+  </style>
+</head>
+
+<body>
+  <div class="main">
+    <div class="Top">
+      <h2>
+        Top
+        <div class="litebox"></div>
+      </h2>
+      <div class="content"></div>
+    </div>
+    <div class="F2">
+      <h2>F2</h2>
+      <div class="content"></div>
+    </div>
+    <div class="F3">
+      <h2>F3</h2>
+      <div class="content"></div>
+    </div>
+    <div class="F4">
+      <h2>F4</h2>
+      <div class="content"></div>
+    </div>
+    <!-- 电梯导航 -->
+    <div class="scroll-nav">
+      <ul>
+        <li data-scr="Top">Top</li>
+        <li data-scr="F2">F2</li>
+        <li data-scr="F3">F3</li>
+        <li data-scr="F4">F4</li>
+      </ul>
+      <div class="bor"></div>
+    </div>
+  </div>
+  <script>
+    // 获取电梯导航元素 scroll-nav ul
+    const scrNavUl = document.querySelector('.scroll-nav ul')
+    // 给scrNavUl添加点击事件 click
+    scrNavUl.addEventListener('click', function (e) {
+      // 获取 li 自定义属性
+      const scr = e.target.dataset.scr
+      // 获取 自定义属性所对应元素offsetTop
+      const top = document.querySelector(`.${scr}`).offsetTop
+      // 页面滚动到指定位置
+      document.documentElement.scrollTop = top
+      // 给li添加active class
+      const oldActive = document.querySelector('.scroll-nav ul li.active')
+      if (oldActive) oldActive.classList.remove('active')
+      e.target.classList.add('active')
+    })
+
+    // 获取每层元素offsetTop
+    const TopT = document.querySelector('.Top').offsetTop
+    const F2T = document.querySelector('.F2').offsetTop
+    const F3T = document.querySelector('.F3').offsetTop
+    const F4T = document.querySelector('.F4').offsetTop
+
+    // 监听window滚动使滑块移动到对应位置
+    window.addEventListener('scroll', function () {
+      const top = document.documentElement.scrollTop
+      // 电梯导航滑出
+      const scrNav = document.querySelector('.scroll-nav')
+      scrNav.style.right = top > 50 ? '20px' : '-50px'      
+      const oldActive = document.querySelector('.scroll-nav ul li.active')
+      if (oldActive) oldActive.classList.remove('active')
+      if (top >= F4T) {
+        document.querySelector('[data-scr=F4]').classList.add('active')
+      } else if (top >= F3T) {
+        document.querySelector('[data-scr=F3]').classList.add('active')
+      } else if (top >= F2T) {
+        document.querySelector('[data-scr=F2]').classList.add('active')
+      } else {
+        document.querySelector('[data-scr=Top]').classList.add('active')
+      }
+    })
+
+    // test
+    document.querySelector('.Top h2').addEventListener('mouseenter', function(){
+      document.querySelector('.litebox').style.top = 0      
+    })
+    document.querySelector('.Top h2').addEventListener('mouseleave', function(){
+      document.querySelector('.litebox').style.top = '-100%'   
+    })
+
+  </script>
+</body>
+
+</html>

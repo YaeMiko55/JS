@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+  <style>
+    .box {
+      margin: 5% auto;
+      width: 60%;
+      height: 500px;
+      border-left: 2px solid black;
+      border-bottom: 2px solid black;
+      display: flex;
+      justify-content: space-around;
+      align-items: end;
+    }
+
+    .box>div {
+      width: 20%;
+      height: 500px;
+      background-color: rgba(0, 0, 255, .1);
+      border: 2px solid rgba(0, 0, 0, .1);
+      border-radius: 10px 10px 0 0;
+
+      text-align: center;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+    }
+
+    span.name {
+      font-weight: 600;
+      margin-bottom: -25px;
+    }
+
+    span.num {
+      font-weight: 600;
+      margin-top: -25px;
+    }
+  </style>
+</head>
+
+<body>
+  <script>
+    // 数据数组
+    let arr = []
+    // 用户输入
+    for (let i = 0; i < 4; i++) {
+      arr.push(prompt(`请输入第${i + 1}季度销量：`))
+    }
+    // 渲染
+
+    document.write(`<div class="box">`)
+    for (let i = 0; i < 4; i++) {
+      document.write(`
+        <div class="date${i}" style="height: ${arr[i] * 4.5}px;">
+          <span class="num">${arr[i]}</span>
+          <span class="name">第${i+1}季度</span>
+        </div>
+        `)
+    }
+    document.write(`</div>`)
+  </script>
+</body>
+
+</html>

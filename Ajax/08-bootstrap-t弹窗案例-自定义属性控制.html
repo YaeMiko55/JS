@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>bootstrap弹窗</title>
+  <!-- 引入bootstrap css -->
+  <link rel="stylesheet" href="./bootstrap-5.3.0-alpha1-dist/css/bootstrap.min.css">
+</head>
+
+<body>
+  <!-- 
+    1.先引入css和js
+    2.给弹窗添加类名
+    3.给button添加data-bs-toggle="modal"和data-bs-target="css选择器要控制的弹窗（）" 显示弹窗
+    4.data-bs-dismiss="modal" 关闭弹窗的自定义属性
+    -->
+  <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target=".myBox">显示弹窗</button>
+  <!-- 从bootstrap文档复制及结构 -->
+  <!-- bootstrap的Modal弹窗：添加modal类名（默认隐藏） -->
+  <div class="modal myBox" tabindex="-1">
+    <div class="modal-dialog">
+      <!-- 内容 -->
+      <div class="modal-content">
+        <!-- 头部 -->
+        <div class="modal-header">
+          <h5 class="modal-title">Modal title</h5>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <!-- 身体 -->
+        <div class="modal-body">
+          <p>Modal body text goes here.</p>
+        </div>
+        <!-- 底部 -->
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+          <button type="button" class="btn btn-primary">Save changes</button>
+        </div>
+      </div>
+    </div>
+  </div>
+  <!-- 引入bootstrap js -->
+  <script src="./bootstrap-5.3.0-alpha1-dist/js/bootstrap.min.js"></script>
+</body>
+
+</html>

@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+    }
+
+    .box {
+      height: 400px;
+      width: 300px;
+      background-color: #eee;
+      margin: 50px auto;
+      border: .5px solid #eee;
+      border-radius: 10px;
+      box-shadow: 5px 5px 10px #ccc;
+
+      text-align: center;
+      overflow: hidden;
+    }
+
+    .hour,
+    .min,
+    .sec {
+      color: #e4e4e4;
+      font-size: 24px;
+      padding: 10px;
+      background-color: #333;
+    }
+
+    .text1 {
+      margin-top: 50px;
+    }
+
+    .text2 {
+      margin: 50px auto 30px;
+      font-weight: 600;
+      font-size: 18px;
+    }
+
+    .text3 {
+      margin-top: 80px;
+    }
+  </style>
+</head>
+
+<body>
+  <div class="box">
+    <p class="text1">现在是</p>
+    <p class="today">2024-6-6 12:59:00</p>
+    <p class="text2">距离下班还有</p>
+    <span class="hour">09</span>
+    <span>:</span>
+    <span class="min">09</span>
+    <span>:</span>
+    <span class="sec">09</span>
+    <p class="text3">下班时间</p>
+    <p class="future">2024-6-6 13:00:00</p>
+  </div>
+  <script>
+    function countDown() {
+      // 获取当前时间
+      function getMyDate() {
+        const date = new Date()
+        const h = date.getHours() > 10 ? date.getHours() : '0' + date.getHours()
+        const m = date.getMinutes() > 10 ? date.getMinutes() : '0' + date.getMinutes()
+        const s = date.getSeconds() > 10 ? date.getSeconds() : '0' + date.getSeconds()
+        return (`${date.getFullYear()}-${date.getMonth() + 1}-${date.getDate()} ${h}:${m}:${s}`)
+      }
+      // 获取此时时间戳
+      const now = +new Date()
+      // 获取将来时间戳
+      const ftTime = '18:00:00'
+      const ft = getMyDate().split(' ')[0] + ' ' + ftTime
+      const future = +new Date(ft)
+      // 计算时差
+      const second = (future - now) / 1000
+      let s = parseInt(second % 60)
+      let m = parseInt(second / 60 % 60)
+      let h = parseInt(second / 60 / 60 % 60)
+      let d = parseInt(second / 60 / 60 / 24)
+      // 补0
+      s = s >= 10 ? s : '0' + s
+      m = m >= 10 ? m : '0' + m
+      h = h >= 10 ? h : '0' + h
+
+      // 渲染数据
+      // 此时时间
+      document.querySelector('.today').innerHTML = getMyDate()
+      // 倒计时
+      document.querySelector('.hour').innerHTML = h
+      document.querySelector('.min').innerHTML = m
+      document.querySelector('.sec').innerHTML = s
+      // 下班时间
+      document.querySelector('.future').innerHTML = ft
+    }
+    // 初始化
+    countDown()
+    // 间歇函数
+    setInterval(countDown,1000)
+  </script>
+</body>
+</html>

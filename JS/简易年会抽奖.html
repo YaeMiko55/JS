@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+  <style>
+    .box {
+      height: 400px;
+      width: 500px;
+      border: 2px solid #0008;
+      margin: 20px auto;
+
+      display: grid;
+    }
+  </style>
+</head>
+<body>
+  <div class="box">
+    <div id="one">
+      <span>一等奖</span>
+      <p>???</p>
+    </div>
+    <div id="two">
+      <span>二等奖</span>
+      <p>???</p>
+    </div>
+    <div id="three">
+      <span>三等奖</span>
+      <p>???</p>
+    </div>
+  </div>
+  <script>
+    // 获取成员列表数据
+    const persons = ['p01','p02','p03','p04','p05','p06']
+
+    // 生成随机数
+    let rd1 = Math.floor(Math.random() * persons.length)
+    // 获取DOM对象
+    const one = document.querySelector('#one p')
+    // 修改DOM对象
+    one.innerHTML = persons[rd1]
+    // 将抽取到的列表元素删除
+    persons.splice(rd1,1)
+    console.log(persons)
+
+    // 生成随机数
+    let rd2 = Math.floor(Math.random() * persons.length)
+    // 获取DOM对象
+    const two = document.querySelector('#two p')
+    // 修改DOM对象
+    two.innerHTML = persons[rd2]
+    // 将抽取到的列表元素删除
+    persons.splice(rd2,1)
+    console.log(persons)
+
+    // 生成随机数
+    let rd3 = Math.floor(Math.random() * persons.length)
+    // 获取DOM对象
+    const three = document.querySelector('#three p')
+    // 修改DOM对象
+    three.innerHTML = persons[rd3]
+    // 将抽取到的列表元素删除
+    persons.splice(rd3,1)
+    console.log(persons)
+  </script>
+</body>
+</html>

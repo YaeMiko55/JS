@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>本地存储</title>
+</head>
+<body>
+  <script>
+    // localStorage 将数据永久保存到本地(相同浏览器共用)
+
+    // 存
+    // localStorage.setItem('key','value') str,str -> str
+    localStorage.setItem('username','张三')
+    localStorage.setItem('age',18)
+    // 存储内容可在浏览器(chrome)Application->Storage中查看
+
+    // 取
+    // localStorage.getItem('key')
+    const username = localStorage.getItem('username')
+    const age = localStorage.getItem('age')
+    console.log(username, age)
+    // 注意 getItem 返回的数据类型为String
+    console.log(typeof age)  // string
+    // console.log(obj);
+    
+    // 改 改原有 key 的 value
+    // localStorage.setItem('key','value')
+    localStorage.setItem('username','李四')
+    
+    // 删
+    // localStorage.removeItem('key')
+    localStorage.removeItem('username')
+
+    // 存取复杂数据类型
+    const obj = {
+      username: '张三',
+      age: 18
+    }
+    const obj_to_json = JSON.stringify(obj)
+    localStorage.setItem('obj', obj_to_json)
+    console.log(obj_to_json)
+    // JSON.stringify(obj) 可以将js对象转换为JSON字符串
+    // {"username":"张三","age":18} 注意key有双引号
+    
+    // JSON.parse(obj_to_json) 可以将json字符串转换为js对象
+    const json_to_obj = JSON.parse(obj_to_json)
+    console.log(json_to_obj)
+    
+  </script>
+</body>
+</html>

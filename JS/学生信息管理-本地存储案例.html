@@ -1,0 +1,262 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>学生信息管理-本地存储案例</title>
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+    }
+
+    .container {
+      width: 800px;
+      margin: 0 auto;
+      overflow: hidden;
+    }
+
+    h2 {
+      text-align: center;
+      margin: 20px;
+    }
+
+    form {
+      text-align: center;
+    }
+
+    [type='text'] {
+      width: 100px;
+      padding: 3px;
+    }
+
+    select {
+      width: 80px;
+      padding: 3px;
+    }
+
+    select option {
+      border-radius: 0;
+    }
+
+    [type='submit'] {
+      width: 50px;
+      padding: 1px;
+    }
+
+    .stuList {
+      margin: 10px auto;
+    }
+
+    table {
+      width: 600px;
+    }
+
+    thead {
+      background-color: #e4e4e4;
+    }
+
+    tbody tr:hover {
+      background-color: #f8f8f8;
+    }
+
+    td {
+      text-align: center;
+    }
+
+    table,
+    thead,
+    tbody,
+    tr,
+    th,
+    td {
+      border: 1px solid #aaa;
+      border-collapse: collapse;
+      padding: 5px;
+    }
+
+    td a {
+      color: darkred;
+    }
+
+    table {
+      margin: 0 auto;
+    }
+    .tt {
+      margin: 10px auto;
+      background-color: #e4e4e4;
+      border: 1px solid #aaa;
+      width: 591px;
+      height: 30px;
+      line-height: 30px;
+      text-align: end;
+      padding-right: 8px;
+      color: #333;
+    }
+  </style>
+</head>
+
+<body>
+  <div class="container">
+    <!-- 顶部添加部分 -->
+    <div class="add">
+      <h2>学生就业信息管理</h2>
+      <form autocomplete="off" action="javascript:" class="stuForm">
+        <input type="text" name="stuname" id="stuname" placeholder="姓名">
+        <input type="text" name="age" id="age" placeholder="年龄">
+        <input type="text" name="salary" id="salary" placeholder="薪资">
+        <select name="gender" id="gender">
+          <option value="男" selected>男</option>
+          <option value="女">女</option>
+        </select>
+        <select name="city" id="city">
+          <option value="北京" selected>北京</option>
+          <option value="上海">上海</option>
+          <option value="广州">广州</option>
+          <option value="深圳">深圳</option>
+        </select>
+        <input type="submit" value="添加">
+      </form>
+    </div>
+    <!-- 表格部分 -->
+    <div class="tt">
+      共有<span>5</span>条数据
+    </div>
+    <div class="stuList">
+      <table>
+        <thead>
+          <tr>
+            <th>ID</th>
+            <th>姓名</th>
+            <th>年龄</th>
+            <th>薪资</th>
+            <th>性别</th>
+            <th>城市</th>
+            <th>添加时间</th>
+            <th>操作</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>1</td>
+            <td>张三</td>
+            <td>18</td>
+            <td>12000</td>
+            <td>男</td>
+            <td>北京</td>
+            <td>2024-8-12 12:00:00</td>
+            <td><a href="javascript:">删除</a></td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+  <script src="../Ajax/lib/form-serialize.js"></script>
+  <script>
+    const initData = [
+      {
+      stuname: '李四',
+      age: 18,
+      salary: 10000,
+      gender: '女',
+      city: '北京',
+      time: '2012-12-12 12:12:12'
+      },
+    ]
+
+    // localStorage.setItem('data', JSON.stringify(initData))
+    // 获取元素
+    const stuForm = document.querySelector('.stuForm')
+    const submit = document.querySelector('[type=submit]')
+    const tbody = document.querySelector('tbody')
+
+    // 获取当前时间
+    function getMyDate() {
+      const date = new Date()
+      const h = date.getHours() > 10 ? date.getHours() : '0' + date.getHours()
+      const m = date.getMinutes() > 10 ? date.getMinutes() : '0' + date.getMinutes()
+      const s = date.getSeconds() > 10 ? date.getSeconds() : '0' + date.getSeconds()
+      return (`${date.getFullYear()}-${date.getMonth() + 1}-${date.getDate()} ${h}:${m}:${s}`)
+    }
+
+    // 渲染table
+    function render() {
+      // 从本地获取数据学生信息列表
+      const stuInfo = JSON.parse(localStorage.getItem('data')) || []
+      // 创建tr
+      const tr = document.createElement('tr')
+      // 渲染数据
+      const trArr = stuInfo.map((ele,i) => {
+        return `
+          <tr>
+            <td>${ele.stuid}</td>
+            <td>${ele.stuname}</td>
+            <td>${ele.age}</td>
+            <td>${ele.salary}</td>
+            <td>${ele.gender}</td>
+            <td>${ele.city}</td>
+            <td>${ele.time}</td>
+            <td><a href="javascript:" data-index="${i}">删除</a></td>
+          </tr>`
+      })
+      // 将tr添加到tbody中
+      tbody.innerHTML = trArr.join('')
+      document.querySelector('.tt span').innerHTML = stuInfo.length
+
+    }
+
+    submit.addEventListener('click', () => {
+      // 使用serialize收集表单数据
+      const formData = serialize(stuForm, { hash: true, empty: true })
+      const { stuname, age, salary, gender, city } = formData
+      if (!(stuname&&age&&salary)) {
+        alert('输入内容不能为空')
+        return
+      }
+      // 读取本地数据
+      let local = JSON.parse(localStorage.getItem('data')) || []
+      // 新增学生对象
+      const stu = {
+        stuid: local.length + 1,
+        stuname: stuname,
+        age: age,
+        salary: salary,
+        gender: gender,
+        city: city,
+        // time: getMyDate(),
+        time: new Date().toLocaleString(),
+      }
+      
+
+      // 将学生对象添加到学生列表中
+      local.push(stu)
+
+      // 向本地更新学生列表
+      localStorage.setItem('data', JSON.stringify(local))
+
+      // 渲染table
+      render()
+
+      // 重置表单
+      stuForm.reset()
+    })
+
+    // 删除模块
+    tbody.addEventListener('click', e => {
+      if (e.target.tagName === 'A') {
+        // 从本地获取数据学生信息列表
+        const local = JSON.parse(localStorage.getItem('data'))
+        // 从e.target.dataset.index获得索引 用其删除对应对象
+        local.splice(e.target.dataset.index,1)
+        // 向本地更新学生列表
+        localStorage.setItem('data', JSON.stringify(local))
+      }
+      // 重新渲染
+      render()
+    })
+    render()
+  </script>
+</body>
+
+</html>

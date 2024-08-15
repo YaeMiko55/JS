@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+  <!-- 引入axios -->
+  <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+</head>
+<body>
+  <button>点击注册</button>
+  <script>
+    // 获取元素
+    const btn = document.querySelector('button')
+    // 添加点击事件
+    btn.addEventListener('click',()=>{
+      // 调用axios
+      axios({
+        url:'https://hmajax.itheima.net/api/register',
+        // 指定请求方法
+        method: 'post',
+        // 提交数据
+        data: {
+          username: 'ititisdhsf0',
+          password: '123456'
+        }
+      }).then(result => {
+        // 打印请求结果
+        console.log(result);
+      }).catch(error => {
+        // 使用catch处理错误信息
+        // 连续注册两次账号，第二次会出错
+        // console.log(error);
+        // console.log(error.response.data.message);
+        // 弹出提示框
+        alert(error.response.data.message)
+      })
+    })
+  </script>
+</body>
+</html>

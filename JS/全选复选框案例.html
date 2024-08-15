@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+  <style>
+    table, thead, tbody, tr, th, td {
+      border: 1.5px solid #444;
+      border-collapse: collapse;
+    }
+    table {
+      margin: 0 auto;
+    }
+    th {
+      font-weight: 600;
+      background-color: skyblue;
+      padding: 10px;
+    }
+    td {
+      padding: 6px;
+      background-color: white;
+      text-align: center;
+    }
+  </style>
+</head>
+<body>
+  <table>
+    <thead>
+      <tr>
+        <th><input type="checkbox" class="ckall"></th>
+        <th>商品名称</th>
+        <th>价格</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><input type="checkbox" class="ck"></td>
+        <td>华为1</td>
+        <td>1999</td>
+      </tr>
+      <tr>
+        <td><input type="checkbox" class="ck"></td>
+        <td>华为2</td>
+        <td>2999</td>
+      </tr>
+      <tr>
+        <td><input type="checkbox" class="ck"></td>
+        <td>华为3</td>
+        <td>3999</td>
+      </tr>
+    </tbody>
+  </table>
+  <script>
+    // 1.全选控制单选
+    // 获取全选复选框
+    const ckall = document.querySelector('.ckall')
+    // 获取所有单个复选框 cks 是一个伪数组 不是单个对象
+    const cks = document.querySelectorAll('.ck')
+    console.log(cks);
+    
+    // 为全选复选框添加事件监听 click
+    ckall.addEventListener('click', function() {
+      // 获取当前checked状态
+      // console.log(ckall.checked);
+      // 将所有单个复选框的值赋值为当前全选复选框checked的状态
+      for (let i = 0; i < cks.length; i++) {
+        cks[i].checked = this.checked
+      }
+    })
+
+    // 2.单选控制全选
+    for (let i = 0; i < cks.length; i++) {
+      // 为所有单个复选框添加事件监听 click
+      cks[i].addEventListener('click', function() {
+        // :checked伪类选择器 可以选中 状态为 true 的 checked 是伪数组
+        // console.log(document.querySelectorAll('.ck:checked').length);
+        ckall.checked = document.querySelectorAll('.ck:checked').length === cks.length
+      })
+    }
+  </script>
+</body>
+</html>

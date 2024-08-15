@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+    }
+    .box {
+      height: 50px;
+      width: 200px;
+      margin: 10px auto;
+      background-color: #c5bfeb;
+      border: 1px solid #eee;
+      border-radius: 6px;
+
+      position: relative;
+    }
+    a {
+      color: #f4f4f4;
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%,-50%);
+    }
+
+  </style>
+</head>
+<body>
+  <div class="box">
+    <a href="https://www.baidu.com/">自动跳转<span>5</span>s</a>
+  </div>
+  <script>
+    let i = 5
+    const timer = setInterval(function(){
+      i--
+      document.querySelector('span').innerHTML = `${i}`
+      if (i===0) {
+        location.href = 'https://www.baidu.com/'
+        clearInterval(timer)
+      }
+    },1000)
+  </script>
+</body>
+</html>

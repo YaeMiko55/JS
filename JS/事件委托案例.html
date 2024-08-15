@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+    }
+    .box {
+      height: 500px;
+      width: 500px;
+      border: 2px solid black;
+      margin: 10px auto;
+    }
+    .coLor {
+      height: 300px;
+      width: 300px;
+      margin: 50px 100px 50px 100px;
+      /* background-color: pink; */
+      box-sizing: border-box;
+      border: 1.2px solid #000;
+      border-radius: 10px;
+    }
+    ul {
+      list-style: none;
+      display: flex;
+      justify-content: space-around;
+    }
+    li, p {
+      padding: 5px;
+      background-color: #e4e4e4;
+      border: 1px solid #666;
+      border-radius: 5px;
+      &:hover {
+        background-color: #c4c4c4;
+        cursor: pointer;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="box">
+    <div class="coLor"></div>
+    <ul>
+      <li data-id="#f55">红色</li>
+      <li data-id="#5f5">绿色</li>
+      <li data-id="#55f">蓝色</li>
+      <li data-id="#000">黑色</li>
+      <li data-id="#888">灰色</li>
+      <p title="点我没用">P标签</p>
+    </ul>
+  </div>
+  <script>
+    // 事件委托
+    // 获取变色盒子
+    const coLor = document.querySelector('.coLor')
+    // 获取ul
+    const ul = document.querySelector('ul')
+    // 添加点击事件
+    ul.addEventListener('click', function(e) {
+      // 点击 ul 中的 li 才触发
+      // console.dir(e.target.tagName);
+      if (e.target.tagName === 'LI') {
+        // 更改盒子颜色
+        // 利用自定义属性获取颜色数据
+        // console.log(e.target.dataset.id);
+        coLor.style.backgroundColor = e.target.dataset.id
+      }
+    })
+  </script>
+</body>
+</html>

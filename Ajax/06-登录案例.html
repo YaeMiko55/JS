@@ -1,0 +1,127 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+  <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+    }
+    .box {
+      width: 300px;
+      height: 250px;
+      margin: 180px auto;
+      background-color: #fafafa;
+      border: .5px solid #d6d6d6;
+      border-radius: 10px;
+      padding: 50px 50px 50px 120px;
+      box-shadow: 5px 5px 10px #aaa;
+    }
+    .tip {
+      height: 40px;
+      line-height: 40px;
+      width: 216px;
+      background-color: #5baa7bd7;
+      border-radius: 5px;
+      text-align: center;
+      color: #FFF;
+      font-size: 14px;
+      opacity: 0;
+      transition: all .4s;
+    }
+    input {
+      padding: 8px;
+      width: 200px;
+      border-radius: 5px;
+      border: 1px solid #888;
+    }
+    button {
+      padding: 8px;
+      background-color: skyblue;
+      color: #FFF;
+      border: none;
+      border-radius: 5px;
+    }
+    p {
+      font-size: 14px;
+      color: #444;
+    }
+    p.welcome {
+      font-size: 24px;
+      color: #222;
+      font-weight: 600;
+    }
+  </style>
+</head>
+<body>
+  <div class="box">
+    <form action="javascript:" class="login-form" autocomplete="off">
+      <p class="welcome">欢迎登录</p>
+      <div class="tip">提示消息</div>
+      <p>用户名:</p>
+      <input type="text" class="username" name="username">
+      <br>
+      <br>
+      <p>密码:</p>
+      <input type="password" class="password" name="password">
+      <br>
+      <br>
+      <button>登录</button>
+      </form>
+  </div>
+  <script src="./lib/form-serialize.js"></script>
+  <script>
+    const tip = document.querySelector('.tip')
+    function alertFn(msg, isSuccess) {
+      tip.style.opacity = 1
+      tip.style.backgroundColor = isSuccess ? '#5baa7bd7' : '#d77070b1'
+      tip.innerHTML = msg
+      setTimeout(()=>{
+      tip.style.opacity = 0
+      }, 2000)
+    }
+    document.querySelector('button').addEventListener('click', ()=>{
+      // 获取用户输入的内容
+      // const username = document.querySelector('.username').value
+      // const password = document.querySelector('.password').value
+
+      // 使用serialize获取表单内容
+      const loginForm = document.querySelector('.login-form')
+      const data = serialize(loginForm, {hash: true, empty: true})
+      // 解构
+      const {username, password} = data
+      // 相当于 const username = loginForm.username password同理
+      
+      // 判断输入字符长度
+      if (username.length < 8) {
+        alertFn('用户名长度需要大于或等于8', false)
+        // alert('用户名长度需要大于或等于8')
+        return
+      }
+      if (password.length < 6) {
+        alertFn('密码长度需要大于或等于6',false)
+        // alert('密码长度需要大于或等于6')
+        return
+      }
+
+      axios({
+        url:'https://hmajax.itheima.net/api/login',
+        method: 'post',
+        data: {
+          username,
+          password
+        }
+      }).then(result => {
+        alertFn(result.data.message,true)
+        // alert(result.data.message)
+      }).catch(error => {
+        alertFn(error.response.data.message,false)
+        // alert(error.response.data.message)
+      })
+    })
+  </script>
+</body>
+</html>

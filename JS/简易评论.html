@@ -1,0 +1,245 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+    }
+
+    .mainBox {
+      width: 31.25rem;
+      /* height: 12.5rem; */
+      /* border: 1px solid rebeccapurple; */
+      margin: 0 auto;
+
+      /* 输入区 */
+      & .userInput {
+        margin: 10px 0 10px;
+        display: flex;
+        justify-content: space-around;
+
+        & .i {
+          height: 60px;
+          width: 60px;
+          margin-top: 3px;
+          box-sizing: border-box;
+
+          background-color: skyblue;
+          border-radius: 50%;
+
+          text-align: center;
+          line-height: 60px;
+          color: white;
+          font-size: 24px;
+          font-weight: 600;
+        }
+
+        /* 输入框 */
+        & #inp {
+          height: 60px;
+          width: 300px;
+          background-color: #f4f4f4;
+          border: 0;
+          border-radius: 10px;
+          padding: 10px;
+          transition: all .3s;
+
+          &:focus {
+            height: 6.25rem;
+            border: 1px solid #f4f4f4;
+          }
+
+        }
+
+        & .inPut p.num {
+          color: #999;
+          font-size: 12px;
+        }
+
+        /* 发布按钮 */
+        & .faBu {
+          width: 90px;
+          height: 60px;
+          background-color: pink;
+          margin-top: 3px;
+          border: 0;
+          border-radius: 10px;
+
+          color: white;
+          font-size: 16px;
+
+          &:hover {
+            border: 1.5px solid #444;
+            cursor: pointer;
+          }
+        }
+      }
+
+      /* 评论区 */
+      & .pingLun {
+        & ul li {
+          border-bottom: 1.5px dashed #ccc;
+          padding: 10px;
+
+          & .userName {
+            color: #444;
+            font-weight: 600;
+          }
+
+          & .data {
+            color: #444;
+            padding: 10px;
+          }
+
+          & .dateTime {
+            color: #999;
+            font-size: 12px;
+          }
+
+          /* display: none; */
+        }
+      }
+    }
+  </style>
+</head>
+
+<body>
+  <div class="mainBox">
+    <div class="userInput">
+      <div class="i">M</div>
+      <div class="inPut">
+        <textarea name="inp" id="inp" placeholder="发一条友善的评论"></textarea>
+        <p class="num">0/50</p>
+      </div>
+      <button class="faBu">发布</button>
+    </div>
+    <div class="pingLun">
+      <ul style="list-style-type: none;">
+        <li style="display: block;">
+          <p class="userName">用户000001:</p>
+          <p class="data">一键三连！一键三连！一键三连！</p>
+          <p class="dateTime">2024-8-3 12:00</p>
+        </li>
+      </ul>
+    </div>
+  </div>
+  <script>
+    // 获取时间
+    function getMyDate () {
+      const date = new Date()
+      let h = date.getHours()
+      let m = date.getMinutes()
+      let s = date.getSeconds()
+      h = h >= 10 ? h : '0' + h
+      m = m >= 10 ? m : '0' + m
+      s = s >= 10 ? s : '0' + s
+      return `${date.getFullYear()}-${date.getMonth()+1}-${date.getDay()} ${h}:${m}:${s}`
+    }
+    // 评论区内容
+    // let PLQData = []
+
+    // 获取输入框
+    const inp = document.querySelector('#inp')
+    const num = document.querySelector('.num')
+    // 获取发布按钮
+    const btnFB = document.querySelector('button.faBu')
+    // 获取评论区
+    const pingLun = document.querySelector('.pingLun ul li')
+    const pingLunData = document.querySelector('.pingLun ul li .data')
+    // 监听输入框字数
+    inp.addEventListener('input', function () {
+      // console.log(inp.value.lenght);
+      num.innerHTML = `${inp.value.length}/50`
+      if (inp.value.length > 50) {
+        num.style.color = 'red'
+      } else {
+        num.style.color = '#999'
+      }
+    })
+    // 为输入框注册键盘监听事件
+    inp.addEventListener('keyup', function (e) {
+      // 按下回车发布评论
+      if (e.key === 'Enter') {
+        // console.log(e);
+        FBPinglun()
+      }
+    })
+    // 为发布按钮添加点击事件
+    btnFB.addEventListener('click', function () {
+      FBPinglun()
+    })
+    // 封装发布评论
+    function FBPinglun() {
+      // 如果内容为空 不发布评论 trim：去除内容前后的空格
+      if (inp.value.length <= 51){
+        if (inp.value.trim()) {
+          // 发布评论
+          // pingLun.style.display = 'block'
+          // pingLunData.innerHTML = inp.value
+
+          // 另一种方法 制造 li 并插入 ul
+          // 将输入的内容加入到评论区列表中
+          // PLQData.push(inp.value)
+          // 制造li  （问题：每一次评论都会重新渲染）
+          // let theLi = PLQData.map(PL => 
+          // `
+          // <li>
+          //   <p class="userName">用户000001:</p>
+          //   <p class="data">${PL}</p>
+          //   <p class="dateTime">2024-08-03</p>
+          // </li>
+          // `).join('')
+          // console.log(theLi);
+          // document.querySelector('.pingLun ul').innerHTML = theLi
+
+          // 技术更新
+          // 添加元素节点
+          // 节点结构
+          // <li style="display: block;">
+          //   <p class="userName">用户000001:</p>
+          //   <p class="data">一键三连！一键三连！一键三连！</p>
+          //   <p class="dateTime">2024-08-03</p>
+          // </li>
+          // 创建新节点li
+          const li = document.createElement('li')
+          // 获取时间
+          // 删除秒
+          // 1.切分
+          let time = getMyDate().split(':')
+          // 2.删除最后一个元素(秒)
+          time.splice(-1,1)
+          // 将元素合并
+          time = time.join(':')
+          // console.log(time);
+          
+          // 获取输入内容
+          const PL = inp.value
+          // 将内容载入到li中
+          li.innerHTML = `
+            <p class="userName">用户000001:</p>
+            <p class="data">${PL}</p>
+            <p class="dateTime">${time}</p>
+          `
+          // 将li追加到ul中
+          const ul = document.querySelector('.pingLun ul')
+          // insertBefore(追加到哪个元素中, 追加在哪个元素之前)
+          // > 使用 追加元素.childen[0] 可以将被追加元素添加到第一位
+          // 另一种追加方法是 ul.appendChild(元素) 将元素追加到最后
+          ul.insertBefore(li, ul.children[0])
+          // 清空输入框
+        }
+        // 复原
+        inp.value = ''
+        num.style.color = '#999'
+        num.innerHTML = `0/50`
+      }
+    }
+  </script>
+</body>
+
+</html>

@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+  <style>
+    table, th, td {
+      border: 1px solid #000;
+      border-collapse: collapse;
+    }
+    th, td {
+      text-align: center;
+      padding: 5px 10px;
+    }
+    th {
+      background-color: rgba(0, 255, 0, 0.1);
+    }
+    td {
+      background-color: rgba(0, 0, 255, 0.1);
+
+    }
+    
+  </style>
+</head>
+<body>
+  
+      
+    
+  <script>
+    // 数据准备
+    let students = [
+      {name:'zhangsan',age:18},
+      {name:'lisi',age:19},
+      {name:'zhaowu',age:18},
+      {name:'wangliu',age:30},
+    ]
+    // 数据渲染
+    document.write(`<table>
+    <thead>
+      <tr>
+        <th>姓名</th>
+        <th>年龄</th>
+      </tr>
+    </thead>
+    <tbody>`)
+
+      // 遍历数组
+      for (let i = 0; i < students.length; i++) {
+         document.write(`
+          <tr>
+            <td>${students[i].name}</td>
+            <td>${students[i].age}</td>
+          </tr>
+         `)
+      }
+
+    document.write(`</tbody>
+  </table>`)
+  </script>
+</body>
+</html>

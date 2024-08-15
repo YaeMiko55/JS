@@ -1,0 +1,226 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>滑动轮播图</title>
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+    }
+
+    .slider {
+      width: 690px;
+      height: 320px;
+      overflow: hidden;
+      position: relative;
+
+      .btns {
+        height: 100%;
+        width: 100%;
+        position: absolute;
+        display: flex;
+        bottom: 0;
+
+        display: flex;
+        justify-content: space-between;
+        z-index: 10;
+
+        & ul {
+          list-style: none;
+          display: flex;
+
+          & li {
+            margin: 300px 5px 0;
+            height: 5px;
+            width: 24px;
+            background-color: #e4e4e4;
+          }
+
+          & li.active {
+            background-color: #2794d8;
+          }
+        }
+
+        & .prev {
+          background-color: #0000;
+          border: none;
+        }
+
+        & .next {
+          font-size: 24px;
+          background-color: #0000;
+          border: none;
+        }
+      }
+
+      & .strip {
+        display: flex;
+        flex-wrap: nowrap;
+        position: absolute;
+        left: 0;
+        transition: all .2s;
+      }
+
+      & .strip div p {
+        height: 90px;
+        width: 680px;
+        background-color: #222b;
+        position: absolute;
+        bottom: 0;
+        padding: 10px 0 0 10px;
+        color: #e4e4e4;
+        font-weight: 600;
+        font-size: 24px;
+      }
+    }
+  </style>
+</head>
+
+<body>
+  <div class="slider">
+    <div class="btns">
+      <button class="prev">
+        <svg xmlns="http://www.w3.org/2000/svg" width="30" height="30" fill="currentColor"
+          class="bi bi-arrow-left-square-fill" viewBox="0 0 16 16">
+          <path
+            d="M16 14a2 2 0 0 1-2 2H2a2 2 0 0 1-2-2V2a2 2 0 0 1 2-2h12a2 2 0 0 1 2 2v12zm-4.5-6.5H5.707l2.147-2.146a.5.5 0 1 0-.708-.708l-3 3a.5.5 0 0 0 0 .708l3 3a.5.5 0 0 0 .708-.708L5.707 8.5H11.5a.5.5 0 0 0 0-1z" />
+        </svg>
+      </button>
+      <ul>
+        <li class="active" data-i="0"></li>
+        <li data-i="1"></li>
+        <li data-i="2"></li>
+        <li data-i="3"></li>
+      </ul>
+      <button class="next">
+        <svg xmlns="http://www.w3.org/2000/svg" width="30" height="30" fill="currentColor"
+          class="bi bi-arrow-right-square-fill" viewBox="0 0 16 16">
+          <path
+            d="M0 14a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V2a2 2 0 0 0-2-2H2a2 2 0 0 0-2 2v12zm4.5-6.5h5.793L8.146 5.354a.5.5 0 1 1 .708-.708l3 3a.5.5 0 0 1 0 .708l-3 3a.5.5 0 0 1-.708-.708L10.293 8.5H4.5a.5.5 0 0 1 0-1z" />
+        </svg>
+      </button>
+    </div>
+    <div class="strip">
+      <div class="img01">
+        <img src="">
+        <p></p>
+      </div>
+      <div class="img02">
+        <img src="">
+        <p></p>
+      </div>
+      <div class="img03">
+        <img src="">
+        <p></p>
+      </div>
+      <div class="img04">
+        <img src="">
+        <p></p>
+      </div>
+    </div>
+  </div>
+  <script>
+    // 数据
+    data = [
+      { src: '../img/slide01.png', title: '垃圾桶摄影师的自我修养' },
+      { src: '../img/slide02.jpg', title: '该出奇“兵器”了' },
+      { src: '../img/slide03.png', title: '三月手记' },
+      { src: '../img/slide04.png', title: '云璃教学日记' },
+    ]
+
+    // 获取slider
+    const slider = document.querySelector('.slider')
+    const strip = document.querySelector('.slider .strip')
+
+    // 创建渲染图片方法
+    function taggle(imgIdex) {
+      document.querySelector(`.slider .strip div:nth-child(${imgIdex + 1}) img`).src = data[imgIdex].src
+      document.querySelector(`.slider .strip div:nth-child(${imgIdex + 1}) p`).innerHTML = data[imgIdex].title
+    }
+    // 将所有图片渲染到strip的对应div中
+    for (let i = 0; i < data.length; i++) {
+      taggle(i)
+    }
+    // 按钮切换功能
+    // 获取按钮
+    const prev = document.querySelector('.prev')
+    const next = document.querySelector('.next')
+
+    // left -> index
+    function leftToIdex(left) {
+      if (!left) left = 0
+      return parseInt(left) / -690
+    }
+
+    // idex -> scroll
+    function scr(idex) {
+      // 注意：data-i自定义属性的值是一个字符串
+      idex = +idex
+      // 让strip滚动到对应轮播图上
+      strip.style.left = idex * -690 + 'px'
+      // 长条换位
+      document.querySelector('.slider .active').classList.remove('active')
+      document.querySelector(`.slider li:nth-child(${idex + 1})`).classList.add('active')
+    }
+
+    // 给按钮添加点击事件
+    prev.addEventListener('click', function () {
+      // 获取图集
+      const strip = document.querySelector('.strip')
+      // 获取图集左偏移量 将其转化为 idex
+      let i = leftToIdex(strip.style.left)
+      // 如果此时为第一张图片点击后跳转到最后一张图片
+      if (i <= 0) i = data.length
+      i--
+      scr(i)
+
+      // console.log('prev->' + strip.style.left);
+
+    })
+    next.addEventListener('click', function () {
+      // 获取图集
+      const strip = document.querySelector('.strip')
+      // 获取图集左偏移量 将其转化为 idex
+      let i = leftToIdex(strip.style.left)
+      // 如果此时为最后一张图片点击后跳转到第一张图片
+      if (i >= data.length - 1) i = -1
+      i++
+      scr(i)
+
+      // console.log('next->' + strip.style.left);
+
+    })
+
+    // 自动轮播
+    let timeID = setInterval(function () {
+      next.click()
+    }, 3000)
+
+    // 鼠标移入时停止轮播
+    slider.addEventListener('mouseenter', function () {
+      clearInterval(timeID)
+    })
+    // 鼠标移出自动轮播
+    slider.addEventListener('mouseleave', function () {
+      // 自动轮播
+      timeID = setInterval(function () {
+        next.click()
+      }, 3000)
+    })
+
+    // 横条切换
+    // 获取ul
+    const sliderUl = document.querySelector('.slider ul')
+    // 将li的点击事件委托给ul
+    sliderUl.addEventListener('click', function (e) {
+      if (e.target.tagName === 'LI') {
+        scr(e.target.dataset.i)
+      }
+    })
+  </script>
+</body>
+
+</html>

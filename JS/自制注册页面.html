@@ -1,0 +1,247 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>注册</title>
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      background-color: #f9f9f9;
+      overflow: hidden;
+    }
+
+    .box {
+      height: 600px;
+      width: 800px;
+      background-color: #fff;
+      margin: 200px auto;
+      overflow: hidden;
+      border: 1px solid #eee9;
+      border-radius: 10px;
+      box-shadow: 5px 5px 5px #ddd;
+      position: relative;
+    }
+    p.title {
+      font-size: 30px;
+      color: #555;
+      margin: 20px;
+    }
+    form {
+      width: 480px;
+      margin: 0 auto;
+      /* text-align: center; */
+      padding-left: 160px;
+    }
+    #username,
+    #pwd,
+    #pwd2,
+    #phone,
+    #code
+    {
+      width: 300px;
+      height: 25px;
+      margin: 5px 0;
+      padding: 10px;
+      border: 1px solid #888;
+      border-radius: 5px;
+    }
+    .getCode {
+      position: absolute;
+      top: 382px;
+      left: 470px;
+    }
+    .xieyi {
+      text-align: left;
+      margin: 7px 10px 10px 2px;
+    }
+    a {
+      text-decoration: none;
+      color: #27aaa8;
+    }
+    [type="submit"] {
+      width: 320px;
+      height: 45px;
+      background-color: #27aaa8;
+      border: 1px solid #ddd9;
+      border-radius: 5px;
+      font-size: 18px;
+      color: #f4f4f4;
+    }
+    .msg {
+      height: 14px;
+
+      line-height: 14px;
+      font-size: 14px;
+      color: rgb(200, 0, 0);
+    }
+  </style>
+</head>
+
+<body>
+  <div class="box">
+    <p class="title">新用户注册</p>
+    <form action="javascript:" autocomplete="off">
+
+      <input type="text" name="username" id="username" placeholder="请输入用户名">
+      <p class="msg"></p>
+
+      <input type="password" name="pwd" id="pwd" placeholder="请输入密码">
+      <p class="msg"></p>
+
+      <input type="password" name="pwd2" id="pwd2" placeholder="请再次输入密码">
+      <p class="msg"></p>
+      
+      <input type="text" name="phone" id="phone" placeholder="请输入手机号">
+      <p class="msg"></p>
+
+      <input type="text" name="code" id="code" placeholder="请输入验证码">
+      <a class="getCode" href="#">获取验证码</a>
+      <p class="msg"></p>
+
+      <div class="xieyi">
+        <input type="checkbox">
+        <span>请阅读:</span>
+        <a href="">《用户协议》</a>
+      </div>
+
+      <input type="submit" value="注册">
+
+    </form>
+  </div>
+  <script>
+    // 获取验证码
+    let flag = true
+    const getCode = document.querySelector('.getCode')
+    getCode.addEventListener('click', () => {
+      // getCode.preventDefault
+      if (flag) {
+        let t = 5
+        getCode.innerText = `再次获取(${t})`
+        getCode.style.color = '#ddd'
+        flag = false
+        let timeId = setInterval(() => {
+        t--
+        getCode.innerText = `再次获取(${t})`
+        if (t === 0) {
+          clearInterval(timeId)
+          getCode.style.color = '#27aaa8'
+          getCode.innerText = '获取验证码'
+          flag = true
+        }
+      }, 1000)
+      }
+    })
+    // 验证用户名
+    const username = document.querySelector('#username')
+    // 当元素value改变时触发事件
+    username.addEventListener('change', verifyUsername)
+    // 封装函数
+    function verifyUsername() {
+      // 获取提示
+      const p = username.nextElementSibling
+      // 制定格式规则
+      const reg = /^[\d\w]{4,12}/
+      if (!reg.test(username.value)) {
+        p.innerHTML = '格式错误，请重新输入'
+        return false
+      }
+      p.innerHTML = ''
+      return true
+    }
+    // 验证密码
+    const pwd = document.querySelector('#pwd')
+    // 当元素value改变时触发事件
+    pwd.addEventListener('change', verifyPwd)
+    // 封装函数
+    function verifyPwd() {
+      // 获取提示
+      const p = pwd.nextElementSibling
+      // 制定格式规则
+      const reg = /^[\d\w]{6,12}/
+      if (!reg.test(pwd.value)) {
+        p.innerHTML = '格式错误，请重新输入'
+        return false
+      }
+      p.innerHTML = ''
+      return true
+    }
+    // 验证二次输入的密码
+    const pwd2 = document.querySelector('#pwd2')
+    // 当元素value改变时触发事件
+    pwd2.addEventListener('change', verifyPwd2)
+    // 封装函数
+    function verifyPwd2() {
+      // 获取提示
+      const p = pwd2.nextElementSibling
+      // 制定格式规则
+      if (pwd.value !== pwd2.value) {
+        p.innerHTML = '两次输入的密码不一致，请重新输入'
+        return false
+      }
+      p.innerHTML = ''
+      return true
+    }
+    // 验证手机号
+    const phone = document.querySelector('#phone')
+    // 当元素value改变时触发事件
+    phone.addEventListener('change', verifyPhone)
+    // 封装函数
+    function verifyPhone() {
+      // 获取提示
+      const p = phone.nextElementSibling
+      // 制定格式规则
+      const reg = /^1[0-9]{10}/
+      if (!reg.test(phone.value)) {
+        p.innerHTML = '格式错误，请重新输入'
+        return false
+      }
+      p.innerHTML = ''
+      return true
+    }
+    // 验证验证码
+    const code = document.querySelector('#code')
+    // 当元素value改变时触发事件
+    code.addEventListener('change', verifyCode)
+    // 封装函数
+    function verifyCode() {
+      // 获取提示
+      const p = code.nextElementSibling.nextElementSibling
+      // 制定格式规则
+      const reg = /[0-9]{6}/
+      if (!reg.test(code.value)) {
+        p.innerHTML = '格式错误，请重新输入'
+        return false
+      }
+      p.innerHTML = ''
+      return true
+    }
+    // 点击注册
+    const submit = document.querySelector('[type="submit"]')
+    const checkbox = document.querySelector('[type="checkbox"]')
+    submit.addEventListener('click', (e) => {
+      if (!checkbox.checked) {
+        alert('请阅读《用户协议》并勾选')
+        return
+      }
+      // if (!verifyUsername()) e.preventDefault()
+      // if (!verifyPwd()) e.preventDefault()
+      // if (!verifyPwd2()) e.preventDefault()
+      // if (!verifyPhone()) e.preventDefault()
+      // if (!verifyCode()) e.preventDefault()
+      
+      if(verifyUsername()&verifyPwd()&verifyPwd2()&verifyPhone()&verifyCode()) {
+        console.log('成功')
+      } else {
+        alert('请按格式输入')
+      }
+    })
+  </script>
+</body>
+
+</html>

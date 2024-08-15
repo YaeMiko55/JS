@@ -1,0 +1,201 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+  <style>
+    /* 轮播图容器 */
+    .carousel {
+      position: relative;
+      width: 600px;
+      overflow: hidden;
+      /* 隐藏溢出的内容 */
+    }
+
+    /* 幻灯片容器 */
+    .slides-container {
+      display: flex;
+      /* 使用flex布局 */
+      width: 100%;
+      /* 宽度为100% */
+    }
+
+    /* 单个幻灯片 */
+    .slide {
+      width: 100%;
+      /* 每个幻灯片占满容器宽度 */
+      flex-shrink: 0;
+      /* 不允许缩小 */
+      display: none;
+      /* 默认不显示 */
+      text-align: center;
+      /* 文本居中 */
+      line-height: 300px;
+      /* 根据幻灯片高度调整，实现垂直居中 */
+      color: white;
+      /* 文本颜色 */
+      font-size: 2em;
+      /* 文本大小 */
+    }
+
+    /* 当前显示的幻灯片 */
+    .slide.active {
+      display: block;
+      /* 显示当前幻灯片 */
+    }
+
+    /* 圆点容器 */
+    .dot-container {
+      text-align: center;
+      /* 圆点水平居中 */
+      margin-top: -30px;
+    }
+
+    /* 单个圆点 */
+    .dot {
+      cursor: pointer;
+      /* 鼠标悬停时显示指针手势 */
+      height: 15px;
+      width: 15px;
+      margin: 0 2px;
+      background-color: #bbb;
+      /* 圆点背景色 */
+      border-radius: 50%;
+      /* 圆点圆形边框 */
+      display: inline-block;
+      /* 内联块级元素 */
+      transition: background-color 0.6s ease;
+      /* 背景色变化过渡效果 */
+    }
+
+    /* 圆点激活状态和鼠标悬浮效果 */
+    .dot.active,
+    .dot:hover {
+      background-color: #717171;
+      /* 激活状态和鼠标悬浮时的背景色 */
+    }
+
+    /* 换页按钮样式 */
+    .prev,
+    .next {
+      cursor: pointer;
+      position: absolute;
+      top: 50%;
+      transform: translateY(-50%);
+      padding: 16px;
+      color: white;
+      font-weight: bold;
+      font-size: 18px;
+      transition: 0.6s ease;
+      border-radius: 0 3px 3px 0;
+      user-select: none;
+      background-color: rgba(0, 0, 0, 0.5);
+      /* 按钮背景色，透明度调整 */
+    }
+
+    /* 上一个幻灯片按钮样式 */
+    .prev {
+      left: 0;
+      border-radius: 3px 0 0 3px;
+    }
+
+    /* 下一个幻灯片按钮样式 */
+    .next {
+      right: 0;
+      border-radius: 0 3px 3px 3px;
+    }
+
+    /* 其他样式可以根据需要添加 */
+  </style>
+</head>
+
+<body>
+  <div id="carousel" class="carousel">
+    <!-- 轮播图的幻灯片容器 -->
+    <div class="slides-container">
+      <!-- 幻灯片1 -->
+      <div class="slide" id="slide1" style="background-color: #f99;">幻灯片 1</div>
+      <!-- 幻灯片2 -->
+      <div class="slide" id="slide2" style="background-color: #9f9;">幻灯片 2</div>
+      <!-- 幻灯片3 -->
+      <div class="slide" id="slide3" style="background-color: #99f;">幻灯片 3</div>
+      <!-- 幻灯片1 -->
+      <div class="slide" id="slide1" style="background-color: #f99;">幻灯片 4</div>
+      <!-- 幻灯片2 -->
+      <div class="slide" id="slide2" style="background-color: #9f9;">幻灯片 5</div>
+      <!-- 幻灯片3 -->
+      <div class="slide" id="slide3" style="background-color: #99f;">幻灯片 6</div>
+      <!-- 可以根据需要添加更多的幻灯片 -->
+    </div>
+
+    <!-- 圆点切换按钮 -->
+    <div class="dot-container">
+      <span class="dot" onclick="currentSlide(1)"></span>
+      <span class="dot" onclick="currentSlide(2)"></span>
+      <span class="dot" onclick="currentSlide(3)"></span>
+      <span class="dot" onclick="currentSlide(4)"></span>
+      <span class="dot" onclick="currentSlide(5)"></span>
+      <span class="dot" onclick="currentSlide(6)"></span>
+      <!-- 根据幻灯片数量添加相应数量的圆点 -->
+    </div>
+
+    <!-- 换页按钮 -->
+    <a class="prev" onclick="moveSlide(-1)">&#10094;</a>
+    <a class="next" onclick="moveSlide(1)">&#10095;</a>
+  </div>
+  <script>
+    // 当前幻灯片索引
+    let slideIndex = 1;
+
+    // 初始显示第一张幻灯片
+    showSlides(slideIndex);
+
+    // 函数：显示幻灯片
+    function showSlides(n) {
+      // 获取所有幻灯片
+      let slides = document.querySelectorAll(".slide");
+      // 遍历幻灯片并隐藏
+      slides.forEach((slide) => {
+        slide.style.display = "none";
+        slide.classList.remove("active");
+      });
+      // 计算当前幻灯片索引
+      if (n > slides.length) { slideIndex = 1 }
+      if (n < 1) { slideIndex = slides.length }
+      // 显示当前幻灯片并添加激活类
+      slides[slideIndex - 1].style.display = "block";
+      slides[slideIndex - 1].classList.add("active");
+
+      // 更新圆点状态
+      showDots(slideIndex);
+    }
+
+    // 函数：更新圆点状态
+    function showDots(n) {
+      let dots = document.querySelectorAll(".dot");
+      dots.forEach((dot, index) => {
+        dot.classList.remove("active");
+        if (index + 1 === n) {
+          dot.classList.add("active");
+        }
+      });
+    }
+
+    // 函数：根据方向移动幻灯片
+    function moveSlide(n) {
+      showSlides(slideIndex += n);
+    }
+
+    // 函数：通过圆点切换幻灯片
+    function currentSlide(n) {
+      showSlides(slideIndex = n);
+    }
+
+    // 定时器自动播放
+    setInterval(moveSlide.bind(null, 1), 3000); // 3秒后切换到下一张幻灯片
+  </script>
+</body>
+
+</html>

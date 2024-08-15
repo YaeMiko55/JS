@@ -1,0 +1,201 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+    }
+    .container {
+      width: 800px;
+      margin: 0 auto;
+    }
+    /* add */
+    h1 {
+      text-align: center;
+      margin: 20px;
+    }
+    .add form {
+      text-align: center;
+    }
+    .add input[type='text'] {
+      width: 80px;
+      height: 20px;
+      padding-left: 3px
+    }
+    .add input[type='submit'] {
+      width: 50px;
+      height: 24px;
+      line-height: 24px;
+      background-color: #0018a3;
+      border: 1px solid #666;
+      border-radius: 5px;
+
+      margin-left: 10px;
+      text-align: center;
+
+      color: #e4e4e4;
+    }
+    .add select {
+      height: 20px;
+    }
+    /* table */
+    table,
+    thead,
+    tbody,
+    tr,
+    th,
+    td {
+      border: 1px solid #bbccff;
+      border-collapse: collapse;
+      text-align: center;
+    }
+    table {
+      margin: 0 auto;
+    }
+    th {
+      padding: 10px 30px;
+      background-color: rgb(219, 245, 255);
+      color: rgb(0, 59, 127);
+    }
+    td {
+      padding: 5px;
+      font-size: 15px;
+      color: #333;
+    }
+    tr:hover {
+      background-color: rgb(237, 250, 255);
+    }
+    td a {
+      font-size: 15px;
+      color: rgb(132, 37, 37);
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <!-- 新增模块 -->
+    <div class="add">
+      <h1>新增学员</h1>
+      <form autocomplete="off" action="javascript:;" class="info">
+        <span>姓名：</span><input type="text" class="" name="name">
+        <span>年龄：</span><input type="text" class="" name="age">
+        <span>性别：</span>
+        <select name="gander" id="gander">
+          <option value="男" selected>男</option>
+          <option value="女">女</option>
+        </select>
+        <span>薪资：</span><input type="text" class="" name="salary">
+        <span>就业城市：</span>
+        <select name="city" id="city">
+          <option value="北京">北京</option>
+          <option value="上海">上海</option>
+          <option value="广州">广州</option>
+          <option value="深圳">深圳</option>
+        </select>
+        <input type="submit" value="录入">
+      </form>
+    </div>
+    <!-- 表格 -->
+    <div class="table">
+      <h1>就业榜</h1>
+      <table>
+        <thead>
+          <tr>
+            <th>学号</th>
+            <th>姓名</th>
+            <th>年龄</th>
+            <th>性别</th>
+            <th>薪资</th>
+            <th>就业城市</th>
+            <th>操作</th>
+          </tr>
+        </thead>
+        <tbody>
+          <!-- <tr>
+            <td>1001</td>
+            <td>张三</td>
+            <td>18</td>
+            <td>男</td>
+            <td>10000</td>
+            <td>北京</td>
+            <td>删除</td>
+          </tr> -->
+        </tbody>
+      </table>
+    </div>
+  </div>
+  <script src="../Ajax/lib/form-serialize.js"></script>
+  <script>
+    // 获取元素
+    const tbody = document.querySelector('tbody')
+    // 创建学生信息数组
+    let stuList = []
+    // 学生id
+    let i = 0
+    // 给submit添加点击事件
+    document.querySelector('[type="submit"]').addEventListener('click',()=>{
+      // 使用serialize插件收集表单
+      const form = document.querySelector('.info')
+      const formInfo = serialize(form, {hash:true,empty:true})
+      // 解构
+      const {name,age,gander,salary,city} = formInfo
+      if (!(name&&age&&salary)) return alert('输入内容不能为空')
+      // 创建学生对象
+      const stu = {
+        stuId: stuList.length + 1,
+        name: name,
+        age: age,
+        gander: gander,
+        salary: salary,
+        city: city
+      }
+      // 将学生对象添加到学生列表
+      stuList.push(stu)
+      // 渲染表格
+      render(stuList)
+      // 重置表单
+      form.reset()      
+    })
+    // 渲染函数
+    function render () {
+      // 清空tbody
+      tbody.innerHTML = ''
+      // 遍历生成tr
+      for (let i = 0; i < stuList.length; i++) {
+        // 生成tr
+        const tr = document.createElement('tr')
+        tr.innerHTML = `
+          <tr>
+            <td>${stuList[i].stuId}</td>
+            <td>${stuList[i].name}</td>
+            <td>${stuList[i].age}</td>
+            <td>${stuList[i].gander}</td>
+            <td>${stuList[i].salary}</td>
+            <td>${stuList[i].city}</td>
+            <td>
+              <a href="javascript:" data-id="${i}">删除</a>
+            </td>
+          </tr>
+        `
+        // 将tr插入到tbody中
+        tbody.appendChild(tr)
+      }
+    }
+    // 删除操作
+    tbody.addEventListener('click',(e)=>{
+      if (e.target.tagName==='A') {
+        
+        // 使用自定义属性获取要删除的数据
+        stuList.splice(e.target.dataset.id,1)
+        // 从新渲染
+        render(stuList)
+      }
+    })
+    
+  </script>
+</body>
+</html>

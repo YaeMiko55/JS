@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+</head>
+<body>
+  <div></div>
+  <script>
+    const div = document.querySelector('div')
+    function getMyDate () {
+      const date = new Date()
+      console.log(date);
+      
+      let h = date.getHours()
+      let m = date.getMinutes()
+      let s = date.getSeconds()
+      h = h > 10 ? h : '0' + h
+      m = m > 10 ? m : '0' + m
+      s = s > 10 ? s : '0' + s
+      return `${date.getFullYear()}-${date.getMonth()+1}-${date.getDay()} ${h}:${m}:${s}`
+    }
+    div.innerHTML = getMyDate()
+  </script>
+</body>
+</html>

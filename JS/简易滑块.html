@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+    }
+    .box {
+      margin: 10px auto;
+      /* height: 300px; */
+      width: 300px;
+      border: 1.2px solid #e4e4e4;
+      /* 给父元素添加相对定位 */
+      position: relative;
+    }
+    ul {
+      list-style: none;
+      margin: 3px auto;
+      width: 280px;
+
+      display: flex;
+      justify-content: space-around;
+
+      & li {
+        cursor: pointer;
+      }
+    }
+    .line {
+      height: 3px;
+      width: 32px;
+      background-color: pink;
+      transition: all .2s;
+    }
+  </style>
+</head>
+<body>
+  <div class="box">
+    <ul>
+      <li>动画</li>
+      <li>音乐</li>
+      <li>番剧</li>
+      <li>电影</li>
+    </ul>
+    <div class="line"></div>
+  </div>
+  <script>
+    // 获取滑块 和 ul
+    const line = document.querySelector('.line')
+    const list = document.querySelector('ul')
+    // 初始化滑块位置
+    // 获取第一个li位置 offsestLeft 
+    // 使用 offsestLeft 需要要一个有定位的父级元素 若没有 默认父级元素为html
+    const firstLi = document.querySelector('ul li')
+    const firstLiLeft = firstLi.offsetLeft
+    // console.log(firstLiLeft);
+    
+    line.style.transform = `translateX(${firstLiLeft}px)`
+    // 给 ul 添加点击事件
+    list.addEventListener('click', function(e) {
+      // 判断被点击的子元素是否为LI
+      if (e.target.tagName === 'LI'){
+        // console.log('点击了li');
+        console.dir(`点击了\'${e.target.textContent}\'`);
+        line.style.transform = `translateX(${e.target.offsetLeft}px)`
+      }
+    })
+  </script>
+</body>
+</html>

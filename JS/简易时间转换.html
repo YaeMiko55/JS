@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+</head>
+<body>
+  <script>
+    // 用户输入
+    let seconds = +prompt('请输入秒数：')
+    // 函数计算
+    function getTime (t) {
+      let hour = parseInt(t / 60 / 60 % 24)
+      let min  = parseInt(t / 60 % 60)
+      let sec  = parseInt(t % 60 )
+
+      hour = hour > 10 ? hour : '0' + hour
+      min  = min  > 10 ? min  : '0' + min
+      sec  = sec  > 10 ? sec  : '0' + sec
+      console.log([hour, min , sec]);
+
+      return [hour, min , sec]
+    }
+    // 调用函数并输出结果
+    // console.log(getTime(seconds));
+    let time = getTime(seconds)
+    alert(`时间转化为：${time[0]}时${time[1]}分${time[2]}秒`)
+
+  </script>
+</body>
+</html>

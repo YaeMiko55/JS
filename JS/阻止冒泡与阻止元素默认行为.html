@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+  <style>
+    .gf {
+      height: 300px;
+      width: 300px;
+      background-color: yellow;
+
+      display: flex;
+      justify-content: space-around;
+      align-items: center;
+    }
+    .fa {
+      height: 200px;
+      width: 200px;
+      background-color: green;
+
+      display: flex;
+      justify-content: space-around;
+      align-items: center;
+    }
+    .son {
+      height: 100px;
+      width: 100px;
+      background-color: blue;
+
+      display: flex;
+      justify-content: space-around;
+      align-items: center;
+    }
+    .gs {
+      height: 50px;
+      width: 50px;
+      background-color: red;
+
+      line-height: 50px;
+      text-align: center;
+      font-size: 12px;
+    }
+  </style>
+</head>
+<body>
+  <div class="gf">
+    <div class="fa">
+      <div class="son">
+        <div class="gs">
+          <a href="www.baidu.com">百度一下</a>
+        </div>
+      </div>
+    </div>
+  </div>
+  <script>
+    // 1.阻止事件冒泡
+    document.querySelector('.gf').addEventListener('click', function(){console.log('点击了gf')})
+    document.querySelector('.fa').addEventListener('click', function(){console.log('点击了fa')})
+    document.querySelector('.son').addEventListener('click', function(){console.log('点击了son')})
+    // 冒泡：若点击了son盒子，三个点击事件都会触发 son -> fa -> gf
+    // 使用事件对象.stopPropagation()阻止事件冒泡
+    document.querySelector('.gs').addEventListener('click', function(e){
+      console.log('点击了gs')
+      e.stopPropagation()
+      // 只有 点击了gs
+    })
+
+    // 2.阻止元素默认行为
+    document.querySelector('a').addEventListener('click', function(e){
+      // 阻止a跳转动作
+      e.preventDefault()
+      e.stopPropagation()
+    })
+  </script>
+</body>
+</html>

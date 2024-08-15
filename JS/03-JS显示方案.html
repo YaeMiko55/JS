@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+<!-- 
+JavaScript 显示方案
+JavaScript 能够以不同方式“显示”数据：
+
+1.使用 window.alert() 写入警告框
+2.使用 document.write() 写入 HTML 输出
+3.使用 innerHTML 写入 HTML 元素
+4.使用 console.log() 写入浏览器控制台    -->
+
+
+<p id="p01">原来的内容</p>
+
+<!-- 2.使用 document.write()
+出于测试目的，使用 document.write() 比较方便 -->
+<button type="button" onclick="document.write('document.write显示方案')">Click</button>
+<!-- 注意：在 HTML 文档完全加载后使用 document.write() 将删除所有已有的 HTML -->
+<!-- 提示：document.write() 方法仅用于测试。 -->
+
+
+
+<script>
+    // 3.使用 innerHTML
+    // 如需访问 HTML 元素，JavaScript 可使用 document.getElementById(id) 方法。
+    // id 属性定义 HTML 元素。innerHTML 属性定义 HTML 内容
+    document.getElementById('p01').innerHTML = '<b>innerHTML显示方案</b>';
+
+    // 1.使用 window.alert()
+    // 您能够使用警告框来显示数据
+    window.alert('window.alert显示方案')
+
+    // 4.使用 console.log()
+    // 在浏览器中，您可使用 console.log() 方法来显示数据。
+    // 请通过 F12 来激活浏览器控制台，并在菜单中选择“控制台”。
+    console.log('console.log显示方案');
+</script>
+
+
+
+</body>
+</html>

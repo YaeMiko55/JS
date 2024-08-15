@@ -1,0 +1,6 @@
+属性                        作用                 说明
+scrollLeft和scrollTop      被滚动走的左侧和顶部    配合页面滚动使用，可读写
+clientWidth和clientHeight  获得元素的宽和高       不包含border、margin、滚动条，用于js获取元素大小，只读
+offsetWidth和offsetHeight  获得元素的宽和高       包含border、padding、滚动条，只读
+offsetLeft和offsetTop      获取元素距离自己以定
+                           位父级元素的左和上距离  获取元素位置的时候使用，只读

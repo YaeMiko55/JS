@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>随机点名</title>
+</head>
+<style>
+  .box {
+    width: 300px;
+    height: 150px;
+    border: 1.5px solid black;
+    margin: 0 auto;
+    text-align: center;
+  }
+</style>
+<body>
+  <div class="box">
+    <h3>随机点名</h3>
+    <p>xxx</p>
+    <div class="btn">
+      <button class="start">开始</button>
+      <button class="stop" disabled="true">暂停</button>
+    </div>
+  </div>
+  <script>
+    const nameData = ['张12','李32','谭13','赵99','吴00','韦43','钱87','覃83']
+    function getRandom(num1, num2) {
+      return parseInt(Math.random() * (num2 - num1 + 1) + num1)
+    }
+    const btnStart = document.querySelector('.start')
+    let timer = 0
+    let rd = 0
+    const nm = document.querySelector('p')
+    btnStart.addEventListener('click',function(){
+      if (nameData.length === 1) {
+        btnStart.disabled = true
+        btnStop.disabled = true
+        nm.innerHTML = `最后一人${nameData[0]}`
+      } else {
+        timer = setInterval(function(){
+          btnStart.disabled = true
+          btnStop.disabled = false
+          rd = getRandom(0,nameData.length-1)
+          nm.innerHTML = nameData[rd]
+        }, 50)
+      }
+    })
+    const btnStop = document.querySelector('.stop')
+    btnStop.addEventListener('click',function(){
+      clearInterval(timer)
+      btnStart.disabled = false
+      btnStop.disabled = true
+      console.log(nameData);
+      nameData.splice(rd,1)
+    })
+  </script>
+</body>
+</html>

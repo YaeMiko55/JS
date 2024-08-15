@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+</head>
+<body>
+  <!-- 1.导入axios -->
+  <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+  <!-- 2.调用axios -->
+  <script>
+    axios({
+      // 3.填写所要请求的url地址
+      url:'http://hmajax.itheima.net/api/news'
+      // 4.回调函数 检查数据是否成功获取
+    }).then(result => {
+      console.log(result);
+    })
+  </script>
+</body>
+</html>

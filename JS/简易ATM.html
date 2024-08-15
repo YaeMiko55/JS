@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+</head>
+
+<body>
+  <script>
+    // 初始余额
+    let mny = 2000
+    let out = 0
+    // 跳出标记
+    let flag = true
+    // 循环体
+    while (flag) {
+      // 用户输入
+      let opt = prompt('简易ATM\n1.存钱\n2.取钱\n3.余额\n4.退出')
+      // 判断选项
+      switch (opt) {
+        case '1':
+          mny += +prompt('存入金额：')
+          break
+        case '2':
+          out = +prompt('取出金额：')
+          if (mny < out) {
+            alert('当前余额不足')
+          } else {
+            mny -= out
+          }
+          break
+        case '3':
+          alert(`当前余额为：${mny}`)
+          break
+        case '4':
+          flag = false
+          break
+      }
+    }
+  </script>
+</body>
+
+</html>
