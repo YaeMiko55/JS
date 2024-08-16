@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+</head>
+
+<body>
+  <div id="app">
+    <h2>v-model 修饰符 .trim . number</h2>
+    <!-- .trim -> 去除首尾空格 -->
+    <!-- .number -> 即将输入内容转换为数字型 -->
+    姓名：<input v-model.trim="username" type="text" name="username" id="username"><br><br>
+    年龄：<input v-model.number="age" type="text" name="age" id="age">
+    
+    <h2>v-on 修饰符 .stop 阻止事件冒泡</h2>
+    <div @click="fatherFn" class="father" style="width: 200px;
+    height: 200px; background-color: pink;">
+      <div @click.stop="sonFn" style="width: 100px;
+    height: 100px; background-color: skyblue;" class="son"></div>
+    </div>
+
+    <h2>阻止默认行为 .prevent</h2>
+    <a @click.prevent href="https://www.baidu.com/">百度一下</a>
+
+    <h2>键盘事件监听 @keyup.enter 回车抬起</h2>
+    <input @keyup="keyFn" type="text" name="text" id="text">
+
+  </div>
+  <script src="https://cdn.jsdelivr.net/npm/vue@2.7.16/dist/vue.js"></script>
+  <script>
+    const app = new Vue({
+      el: '#app',
+      data: {
+        username: '',
+        age: '',
+      },
+      methods: {
+        fatherFn() {
+          alert("click father")
+        },
+        sonFn(e) {
+          // e.stopPropagation()
+          alert("click son")
+        },
+        keyFn(e) {
+          // console.log(e)
+          console.log(e.key)
+          // if (e.key === 'Enter') {
+          //   console.log("回车抬起")
+          // }
+          
+        },
+      }
+    })
+  </script>
+</body>
+
+</html>

@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+</head>
+<body>
+  <div id="app">
+    <ul>
+      <li v-for="(item, index) in bookList">
+        <span>{{ item.title }}</span>
+        <span>{{ item.author }}</span>
+        <button @click="del(item.id)">删除</button>
+      </li>
+    </ul>
+  </div>
+  <script src="https://cdn.jsdelivr.net/npm/vue@2.7.16/dist/vue.js"></script>
+  <script>
+    const app = new Vue({
+      el:'#app',
+      data: {
+        bookList: [
+          {id: 1, title: 'title-1', author: 'aut-1'},
+          {id: 2, title: 'title-2', author: 'aut-2'},
+          {id: 3, title: 'title-3', author: 'aut-3'},
+          {id: 4, title: 'title-4', author: 'aut-4'},
+        ]
+      },
+      methods: {
+        del (id) {
+          this.bookList = this.bookList.filter(item => item.id != id)           
+        }
+      }
+    })
+  </script>
+</body>
+</html>

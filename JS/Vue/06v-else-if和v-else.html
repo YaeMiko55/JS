@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+</head>
+<body>
+  <!-- 
+    v-else-if 和 v-else 是对 v-if 的补充
+  -->
+  <div id="app">
+    <div class="sco90" v-if="score>=90">S</div>
+    <div class="sco80" v-else-if="score>=80">A</div>
+    <div class="sco70" v-else-if="score>=70">B</div>
+    <div class="sco60" v-else-if="score>=60">C</div>
+    <div class="sco60" v-else>D</div>
+  </div>
+
+  <script src="https://cdn.jsdelivr.net/npm/vue@2.7.16/dist/vue.js"></script>
+  <script>
+    const app = new Vue({
+      el:'#app',
+      data:{
+        score:70,
+      }
+    })
+  </script>
+</body>
+</html>

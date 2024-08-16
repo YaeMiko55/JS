@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+</head>
+
+<body>
+  <!-- 
+    创建Vue实例，初始化渲染
+    1.准备容器（vue所管理的范围）
+    2.引包（开发版本 / 生产版本包） 官网获取
+    3.创建实例
+    4.添加配置项 =》 完成渲染
+  -->
+  <!-- 1创建容器 -->
+  <div class="box">
+    <!-- 在这编写渲染逻辑 -->
+    {{msg}}
+    {{num}}
+  </div>
+  <div class="box1"></div>
+  <div class="box2"></div>
+  <!-- 2引包 -->
+  <script src="https://cdn.jsdelivr.net/npm/vue@2.7.16/dist/vue.js"></script>
+  <!-- 3创建vue实例 -->
+  <script>
+    const app = new Vue({
+      // 通过 el 配置选择器，可指定 Vue 管理的是哪个盒子
+      el:'.box',
+      // 通过 data 提供数据
+      data: {
+        msg:'hello vue!',
+        num:123
+      }
+    })
+  </script>
+</body>
+
+</html>

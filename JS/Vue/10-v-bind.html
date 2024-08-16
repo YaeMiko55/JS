@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+</head>
+<body>
+  <!-- v-bind 用于动态设置 标签的属性  -->
+  <!-- 语法 v-bind:属性="表达式" 可简写为 :属性="表达式" -->
+  <div id="app">
+    <img v-bind:src="imgUrl" :title="msg" alt="">
+  </div>
+  <script src="https://cdn.jsdelivr.net/npm/vue@2.7.16/dist/vue.js"></script>
+  <script>
+    const app = new Vue({
+      el:'#app',
+      data: {
+        imgUrl: "../../img/slide03.png",
+        msg:'hahaha'
+      }
+    })
+  </script>
+</body>
+</html>

@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+</head>
+<body>
+  <div id="app">
+    <img :src="imgUrlList[index]" alt="">
+    <button @click="index--" v-show="index > 0">上一张</button>
+    <button @click="index++" v-show="index < imgUrlList.length-1">下一张</button>
+  </div>
+  <script src="https://cdn.jsdelivr.net/npm/vue@2.7.16/dist/vue.js"></script>
+  <script>
+    const app = new Vue({
+      el:'#app',
+      data: {
+        index: 0,
+        imgUrlList: [
+          "../../img/slide01.png",
+          "../../img/slide02.jpg",
+          "../../img/slide03.png",
+          "../../img/slide04.png",
+        ]
+      },
+      // methods: {
+      //   fn(act) {
+      //     this.index += act
+      //     if(this.index < 0) this.index = this.imgUrlList.length - 1
+      //     if(this.index >= this.imgUrlList.length) this.index = 0
+      //     console.log(this.index)
+      //   }
+      // }
+    })
+  </script>
+</body>
+</html>

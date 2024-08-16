@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+</head>
+<body>
+
+  <div id="app">
+    {{ msg }}
+  </div>
+
+  <script src="https://cdn.jsdelivr.net/npm/vue@2.7.16/dist/vue.js"></script>
+
+  <script>
+    const app = new Vue({
+      el:'#app',
+      data:{
+        // 响应式数据 数据变化了，视图自动更新
+        msg:'hello vue',
+        count: 100
+      }
+    })
+
+    // 访问数据
+    console.log(app.msg)
+    console.log(app.count)
+    // 修改数据
+    app.msg = 'hi vue'
+    app.count = 99
+    
+    console.log(app.msg)
+    console.log(app.count)
+    
+  </script>
+</body>
+</html>

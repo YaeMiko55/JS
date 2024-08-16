@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+</head>
+<body>
+
+  <div id="app">
+    <h1>张三记事本</h1>
+    <span v-show="list.length > 0">剩余{{ list.length }}个任务</span>
+    <button v-show="list.length > 0" @click="clear">清空任务列表</button>
+    <main>
+      <!-- @keyup.enter="add" 添加事件：当回车抬起时触发 -->
+      <input @keyup.enter="add" v-model="toDoName" type="text" name="add" id="add" placeholder="请输入">
+      <button @click="add">添加任务</button>
+      <ol>
+        <!-- 有 ol 干嘛用 index？ -->
+        <li v-for="item in list">
+          {{ item.name }}
+          <button @click="del(item.id)">x</button>
+        </li>
+      </ul>
+    </main>
+  </div>
+
+  <script src="https://cdn.jsdelivr.net/npm/vue@2.7.16/dist/vue.js"></script>
+  <script>
+    const app = new Vue({
+      el: '#app',
+      data: {
+        toDoName: '',
+        list:[],
+      },
+      methods: {
+        // 删除任务
+        del(id) {
+          this.list = this.list.filter(item => item.id != id)
+        },
+        // 添加任务
+        add(){
+          // 拦截空任务
+          if (!this.toDoName) return
+          this.list.unshift({
+            // 先用日期对象代替
+            id: +new Date(),
+            name: this.toDoName
+          })
+          this.toDoName = ''
+        },
+        clear() {
+          this.list = []
+        }
+      }
+    })
+  </script>
+</body>
+</html>

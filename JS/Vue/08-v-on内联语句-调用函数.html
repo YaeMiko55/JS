@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+</head>
+
+<body>
+  <!-- v-on中可以调用方法 -->
+  <div id="app">
+    <button @click="fn">显示/隐藏</button>
+    <h3 v-show="isShow">
+      <a href="https://www.baidu.com/">百度一下</a>
+    </h3>
+  </div>
+  <script src="https://cdn.jsdelivr.net/npm/vue@2.7.16/dist/vue.js"></script>
+  <script>
+    const app = new Vue({
+      el: '#app',
+      data: {
+        isShow:true,
+      },
+      methods: {
+        // 在这里写组件的方法
+        fn() {
+          // this指向当前元素对象
+          this.isShow = !this.isShow
+          console.log(this.isShow)
+        }
+      }
+    })
+  </script>
+</body>
+
+</html>
