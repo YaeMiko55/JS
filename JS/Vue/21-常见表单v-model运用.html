@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+</head>
+
+<body>
+
+  <div id="app">
+    <h2>text输入框</h2>
+    姓名：<br>
+    <input v-model="username" type="text" name="username" id="username" autocomplete="off">
+    <br><br>
+
+    <h2>checkbox复选框</h2>
+    单身：
+    <input v-model="single" type="checkbox">
+    <br><br>
+
+    <h2>单选框</h2>
+    性别：
+    <input v-model="gender" type="radio" name="gender" value="1">男
+    <input v-model="gender" type="radio" name="gender" value="0">女
+    <input v-model="gender" type="radio" name="other" value="x">其他
+    <br><br>
+
+    <h2>下拉栏</h2>
+    所在城市：
+    <select v-model="cityId" name="cityId" id="cityId">
+      <option value="101">北京</option>
+      <option value="102">上海</option>
+      <option value="103">广州</option>
+      <option value="104">深圳</option>
+    </select>
+
+    <h2>文本域</h2>
+    自我介绍：<br>
+    <textarea v-model="introduce" name="introduce" id="introduce"></textarea>
+
+  </div>
+
+  <script src="https://cdn.jsdelivr.net/npm/vue@2.7.16/dist/vue.js"></script>
+  <script>
+    const app = new Vue({
+      el: '#app',
+      data: {
+        username: '',
+        single: false,
+        gender: 1,
+        cityId: '102',
+        introduce: '',
+      },
+      methods: {
+
+      }
+    })
+  </script>
+</body>
+</html>

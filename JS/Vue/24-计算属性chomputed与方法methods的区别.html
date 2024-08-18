@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+</head>
+<body>
+  <div id="app">
+    <ul>
+      <li v-for="item in list">{{ item }}</li>
+    </ul>
+    <!-- 将 p 元素复制 5份 -->
+    <p>sum:{{ sumNum() }}</p>
+    <p>sum:{{ sumNum() }}</p>
+    <p>sum:{{ sumNum() }}</p>
+    <p>sum:{{ sumNum() }}</p>
+    <p>sum:{{ sumNum() }}</p>
+    <!-- 
+    使用计算属性 computed 时 sumNum 只会执行一次
+     sumNum 会将计算结果缓存 下次使用该属性时会 直接调用  
+    -->
+    <!-- 
+      使用方法 methods 时 sumNum() 出现几次就执行几次
+      执行完成后会 清除缓存
+    -->
+  </div>
+  <script src="https://cdn.jsdelivr.net/npm/vue@2.7.16/dist/vue.js"></script>
+  <script>
+    const app = new Vue({
+      el:'#app',
+      data:{
+        list: [1,2,3,4,5],
+      },
+      methods: {
+        sumNum() {
+          let s = this.list.reduce((sum, item) => sum + item, 0)
+          console.log('计算属性执行了')
+          return s
+        },
+      },
+      // computed: {
+      //   sumNum() {
+      //     let s = this.list.reduce((sum, item) => sum + item, 0)
+      //     console.log('计算属性执行了')
+      //     return s
+      //   },
+      // },
+    })
+  </script>
+</body>
+</html>

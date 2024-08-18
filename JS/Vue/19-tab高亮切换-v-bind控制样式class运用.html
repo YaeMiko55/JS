@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+  <style>
+    ul {
+      list-style: none;
+      display: flex;
+    }
+    li {
+      padding: 20px;
+    }
+    .active {
+      background-color: skyblue;
+      color: aliceblue;
+    }
+  </style>
+</head>
+<body>
+  <div id="app">
+    <ul>
+      <!-- 
+        1. 创建变量 activeIdex 记录高亮索引
+        2. v-for 循环
+        3. v-on 拿到循环的 index
+        4. 将 index 值给 activeIdex
+        5. v-bind:class { className: index === activeIdex } 
+      -->
+      <li :class="{ active: activeIdex === index}" v-for="(item, index) in tabList" @click="activeIdex = index">{{ item.name }}</li>
+    </ul>
+  </div>
+  <script src="https://cdn.jsdelivr.net/npm/vue@2.7.16/dist/vue.js"></script>
+  <script>
+    const app = new Vue({
+      el:'#app',
+      data:{
+        // 用于标记 高亮元素索引
+        activeIdex: 0,
+        tabList: [
+          { id: 1, name: 'tab01'},
+          { id: 2, name: 'tab02'},
+          { id: 3, name: 'tab03'}
+        ]
+      }
+    })
+  </script>
+</body>
+</html>

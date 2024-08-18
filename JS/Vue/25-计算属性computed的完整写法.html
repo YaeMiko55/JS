@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+</head>
+<body>
+  <div id="app">
+    姓：
+    <input v-model="firstName" type="text" name="firstName" id="firstName">
+    +名：
+    <input v-model="lastName" type="text" name="lastName" id="lastName">
+    = <span>{{ firstName }}{{ lastName }}</span>
+    <br><br>
+    <button @click="editeName">改名</button>
+  </div>
+  <script src="https://cdn.jsdelivr.net/npm/vue@2.7.16/dist/vue.js"></script>
+  <script>
+    const app = new Vue({
+      el:'#app',
+      data:{
+        firstName: '张',
+        lastName: '三',
+      },
+      methods: {
+        editeName () {
+          this.fullName = '赵武榴'
+        }
+      },
+      // 计算属性简写只能 读 不能 改
+      // 完整写法 能 读 改
+      // 完整写法 get() + set()
+      computed: {
+        fullName: {
+          // 当 计算属性fullName 被获取求值时 执行 get() 优先调用缓存
+          get() {
+            fullName: this.firstName + this.lastName
+          },
+          // 当 计算属性 被修改复制时 执行 set()
+          // 修改的 值 传递给 set 的 形参
+          set(value) {
+            this.firstName = value.slice(0,1)
+            this.lastName = value.slice(1)
+          }
+        }
+      }
+    })
+  </script>
+</body>
+</html>

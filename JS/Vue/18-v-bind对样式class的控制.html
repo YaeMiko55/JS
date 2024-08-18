@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+</head>
+<style>
+  * {
+    margin: 0;
+    padding: 0;
+  }
+
+  .box1,
+  .box2 {
+    margin: 10px;
+    width: 100px;
+    height: 100px;
+    border: 3px solid black;
+
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+
+  .big {
+    height: 300px;
+    width: 300px;
+  }
+
+  .pink {
+    background-color: pink;
+  }
+</style>
+
+<body>
+
+  <div id="app">
+    <!-- 对象形式  :class="{ 类名:boolean, ... }" true为开启, false 反之 -->
+    <!-- 适用于频繁切换 -->
+    <div :class="{ big:true, pink:false }" class="box1">BOX1</div>
+    <!-- 数组形式  :class="[ '类名', ... ]" 类似 className -->
+    <!-- 适用于批量添加/删除类 -->
+    <div :class="[ 'big','pink' ]" class="box2">BOX1</div>
+  </div>
+
+  <script src="https://cdn.jsdelivr.net/npm/vue@2.7.16/dist/vue.js"></script>
+  <script>
+    const app = new Vue({
+      el: '#app',
+      data: {
+
+      }
+    })
+  </script>
+</body>
+
+</html>
