@@ -12,6 +12,10 @@
       border: 1px solid #000;
       border-collapse: collapse;
     }
+    table {
+      float: left;
+      margin-right: 20px;
+    }
 
     th,
     td {
@@ -31,6 +35,8 @@
     form {
       padding: 10px;
       border: 2px solid;
+
+      float: left;
     }
 
     /* onPassFont */
@@ -57,9 +63,10 @@
         <tr v-for="(item, index) in list">
           <td>{{index+1}}</td>
           <td>{{item.name}}</td>
-          <td :class="{ noPass: item.score < 90 }">{{item.score}}</td>
+          <!-- 不及格红色高亮 -->
+          <td :class="{ noPass: item.score < 60 }">{{item.score}}</td>
           <td>
-            <a href="#" @click="del">删除</a>
+            <a @click.prevent="del(item.id)" href="#" @click="del">删除</a>
           </td>
         </tr>
       </tbody>
@@ -71,16 +78,24 @@
           </td>
         </tr>
       </tbody>
-
+      <tfoot>
+        <td colspan="5">
+          <span>总分：{{ sumScore }}--</span><span>平均分：{{ avgScore }}</span>
+        </td>
+      </tfoot>
     </table>
+
+
     <!-- add -->
     <form action="javascript:">
       <p>新增</p>
       <label for="name">科目：</label>
-      <input type="text" name="name" id="name" autocomplete="off">
+      <input v-model.trim="subject" type="text" name="name" id="name" autocomplete="off">
       <br><br>
       <label for="score">成绩：</label>
-      <input type="text" score="score" id="score" autocomplete="off">
+      <input v-model.number="score" type="text" score="score" id="score" autocomplete="off">
+      <br><br>
+      <button @click="add" type="submit">提交</button>
     </form>
   </div>
 
@@ -91,13 +106,46 @@
       data: {
         list: [
           { id: 1, name: '语文', score: 89 },
-          { id: 2, name: '数学', score: 150 },
-          { id: 3, name: '英语', score: 140 },
+          { id: 2, name: '数学', score: 99 },
+          { id: 3, name: '英语', score: 100 },
         ],
+        subject: '',
+        score: '',
       },
       methods: {
-        del () {
-          
+        // 删除
+        del (id) {
+          this.list = this.list.filter( item => item.id !== id )
+        },
+        // 添加
+        add () {
+          if (!this.subject) {
+            alert('请输入正确的科目名称')
+            return
+          }
+          if (typeof this.score !== 'number') {
+            alert("请输入正确的成绩")
+            return
+          }
+          // 将科目对象添加到列表中
+          this.list.unshift({
+            id: +new Date(),
+            name: this.subject,
+            score: this.score
+          })
+          // 清空表单
+          this.subject = ''
+          this.score = ''
+        },
+      },
+      computed: {
+        sumScore () {
+          return this.list.reduce((sum, item) => sum + item.score, 0)
+        },
+        avgScore () {
+          if (this.list.length === 0) return 0
+          // toFixed(int) -> 保留[int]位小数
+          return (this.sumScore / this.list.length).toFixed(2)
         }
       }
     })
