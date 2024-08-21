@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+</head>
+
+<body>
+  <div id="app">
+    <input autocomplete="off" v-model="obj.words" type="text" name="txet" id="text">
+    <select v-model="obj.lang" name="" id="">
+      <option value="italy">意大利</option>
+      <option value="english">英语</option>
+      <option value="german">德语</option>
+    </select>
+    <p>翻译结果：{{ result }}</p>
+  </div>
+  <script src="https://cdn.jsdelivr.net/npm/vue@2.7.16/dist/vue.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+  <script>
+    const app = new Vue({
+      el: '#app',
+      data: {
+        // words: '',
+        // 对象里的变量
+        obj: {
+          words: '默认值',
+          lang: 'italy',
+        },
+
+        // 翻译结果
+        result: '',
+        // 延时器id
+        // timer: null,
+        // 与页面渲染无关的属性 可以直接绑定在app上 不用在 data 上声明
+      },
+      watch: {
+        obj: {
+          deep: true, // 深度侦听 修改后触发
+          immediate: true, // 立刻执行
+          handler(newValue) {
+            console.log('对象被修改了')
+            clearInterval(this.timer)
+            this.timer = setTimeout(async () => {
+              // axios 
+              const res = await axios({
+                url: 'https://applet-base-api-t.itheima.net/api/translate',
+                param: newValue // <- words and lang
+              })
+              this.result = res.data.data
+            }, 300)
+          }
+        }
+      }
+    })
+  </script>
+</body>
+
+</html>

@@ -1,0 +1,246 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      background-color: #eee;
+    }
+
+    .container {
+      width: 1000px;
+      margin: 10px auto;
+      display: flex;
+      flex-direction: column;
+    }
+
+    header h1 {
+      color: rgb(51, 231, 189);
+      margin: 6px;
+    }
+
+    table,
+    thead,
+    tbody,
+    tr {
+      border: 1px solid #ccc;
+      text-align: center;
+      border-collapse: collapse;
+      background-color: #fafafa;
+    }
+
+    .chk_active {
+      background-color: #ecfdff;
+    }
+
+    th {
+      width: 150px;
+      padding: 6px;
+      font-weight: 500;
+    }
+
+    td {
+      text-align: center;
+    }
+    td.num {
+      position: relative;
+    }
+    .cj {
+      position: absolute;
+      top: 0;
+      left: 40px;
+    }
+    .fruit_img {
+      font-size: 36px;
+    }
+
+    .num_btn_l {
+      width: 26px;
+      height: 28px;
+
+      position: absolute;
+      top: 12px;
+      left: 0;
+    }
+
+    .num_btn_r {
+      width: 26px;
+      height: 28px;
+
+      position: absolute;
+      top: 12px;
+      left: 60px;
+    }
+
+    span.num {
+      height: 27px;
+      line-height: 27px;
+      width: 34px;
+      border: 1px solid #888;
+      /* padding: 3px 13px; */
+      text-align: center;
+
+      position: absolute;
+      top: 12px;
+      left: 25px;
+    }
+
+    .del {
+      display: block;
+      height: 24px;
+      line-height: 24px;
+      width: 40px;
+      margin: 0 auto;
+      border-radius: 3px;
+
+      text-decoration: none;
+      text-align: center;
+      color: #eee;
+      background-color: rgb(255, 55, 55);
+    }
+
+    .money {
+      width: 300px;
+      font-size: 36px;
+      font-weight: 800;
+      color: rgb(255, 55, 55);
+    }
+
+    tfoot {
+      position: relative;
+      height: 48px;
+    }
+
+    .ok {
+      height: 24px;
+      width: 40px;
+      background-color: rgb(102, 194, 231);
+      border: 1px solid #fff;
+      border-radius: 4px;
+      color: #eee;
+    }
+
+    .listIsNull {
+      padding: 30px;
+      font-size: 24px;
+      color: #ccc;
+    }
+  </style>
+</head>
+
+<body>
+  <div id="app">
+    <div class="container">
+      <header>
+        <h1><i>ZS_Fruit</i></h3>
+      </header>
+      <p class="table_title"></p>
+      <table>
+        <thead>
+          <tr>
+            <th>选中</th>
+            <th>图片</th>
+            <th>单价</th>
+            <th>个数</th>
+            <th>小计</th>
+            <th>操作</th>
+          </tr>
+        </thead>
+        <!-- 水果列表不为空 -->
+        <tbody v-if="fruitList.length > 0">
+          <tr v-for="(item, index) in fruitList" :key="item.id" :class="{ chk_active: item.isChecked }">
+            <td>
+              <input v-model="item.isChecked" type="checkbox" name="" id="">
+            </td>
+            <td>
+              <span class="fruit_img">{{ item.icon }}</span>
+            </td>
+            <td>{{ item.price }}</td>
+            <td class="num">
+              <div class="cj">
+                <button :disabled="item.num <= 1" @click="item.num--" class="num_btn_l">-</button>
+                <span class="num">{{ item.num }}</span>
+                <button @click="numS(item.id)" class="num_btn_r">+</button>
+              </div>
+            </td>
+            <td>{{ item.price * item.num }}</td>
+            <td>
+              <a @:click.prevent href="#" class="del" @click="del(item.id)">删除</a>
+            </td>
+          </tr>
+        </tbody>
+        <!-- 水果列表为空 -->
+        <tbody v-else>
+          <tr>
+            <td class="listIsNull" colspan="6"><i>暂无数据</i></td>
+          </tr>
+        </tbody>
+        <!-- table foot -->
+        <tfoot>
+          <tr>
+            <td>
+              <input type="checkbox" name="" id="">
+              <span>全选</span>
+            </td>
+            <td></td>
+            <td></td>
+            <td colspan="2">
+              <span>总价：￥</span>
+              <span class="money">{{ sumPrice }}</span>
+            </td>
+            <td>
+              <button @click="" class="ok">结算</button>
+            </td>
+          </tr>
+        </tfoot>
+      </table>
+    </div>
+  </div>
+  <script src="https://cdn.jsdelivr.net/npm/vue@2.7.16/dist/vue.js"></script>
+
+  <script>
+    const app = new Vue({
+      el: '#app',
+      data: {
+        fruitList: [
+          { id: 1, icon: '🍇', isChecked: true, num: 90, price: 1.00 },
+          { id: 2, icon: '🍉', isChecked: false, num: 2, price: 6.00 },
+          { id: 3, icon: '🍊', isChecked: true, num: 5, price: 2.50 },
+          { id: 4, icon: '🍒', isChecked: false, num: 9, price: 10.00 },
+        ]
+      },
+      methods: {
+        // 删除按钮
+        del(id) {
+          this.fruitList = this.fruitList.filter(item => item.id !== id)
+        },
+        // 加减按钮
+        numA(id) {
+          const fruit = this.fruitList.find(item => item.id === id)
+          // if ( fruit.num <= 1 ) return
+          fruit.num--
+        },
+        numS(id) {
+          const fruit = this.fruitList.find(item => item.id === id)
+          // if ( fruit.num >= 99 ) return
+          fruit.num++
+        },
+      },
+      computed: {
+        sumPrice() {
+          return this.fruitList.reduce((sum, item) => sum + item.price * item.num, 0)
+        },
+      }
+    })
+  </script>
+</body>
+
+</html>
