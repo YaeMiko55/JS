@@ -16,7 +16,7 @@
     }
 
     .container {
-      width: 1000px;
+      width: 680px;
       margin: 10px auto;
       display: flex;
       flex-direction: column;
@@ -42,22 +42,26 @@
     }
 
     th {
-      width: 150px;
+      width: 100px;
       padding: 6px;
       font-weight: 500;
     }
 
     td {
       text-align: center;
+      width: 100px;
     }
+
     td.num {
       position: relative;
     }
+
     .cj {
       position: absolute;
       top: 0;
-      left: 40px;
+      left: 16px;
     }
+
     .fruit_img {
       font-size: 36px;
     }
@@ -121,7 +125,7 @@
 
     .ok {
       height: 24px;
-      width: 40px;
+      width: 68px;
       background-color: rgb(102, 194, 231);
       border: 1px solid #fff;
       border-radius: 4px;
@@ -187,7 +191,7 @@
         <tfoot>
           <tr>
             <td>
-              <input type="checkbox" name="" id="">
+              <input v-model="isAll" type="checkbox" name="" id="">
               <span>全选</span>
             </td>
             <td></td>
@@ -197,7 +201,7 @@
               <span class="money">{{ sumPrice }}</span>
             </td>
             <td>
-              <button @click="" class="ok">结算</button>
+              <button class="ok">结算({{ sumConut }})</button>
             </td>
           </tr>
         </tfoot>
@@ -207,15 +211,18 @@
   <script src="https://cdn.jsdelivr.net/npm/vue@2.7.16/dist/vue.js"></script>
 
   <script>
+    // 默认水果列表
+    const defalutList = [
+      { id: 1, icon: '🍇', isChecked: true, num: 90, price: 1.00 },
+      { id: 2, icon: '🍉', isChecked: false, num: 2, price: 6.00 },
+      { id: 3, icon: '🍊', isChecked: true, num: 5, price: 2.50 },
+      { id: 4, icon: '🍒', isChecked: false, num: 9, price: 10.00 },
+    ]
     const app = new Vue({
       el: '#app',
       data: {
-        fruitList: [
-          { id: 1, icon: '🍇', isChecked: true, num: 90, price: 1.00 },
-          { id: 2, icon: '🍉', isChecked: false, num: 2, price: 6.00 },
-          { id: 3, icon: '🍊', isChecked: true, num: 5, price: 2.50 },
-          { id: 4, icon: '🍒', isChecked: false, num: 9, price: 10.00 },
-        ]
+        // 水果列表 优先从 本地获取
+        fruitList: JSON.parse(localStorage.getItem('list')) || defalutList
       },
       methods: {
         // 删除按钮
@@ -235,10 +242,32 @@
         },
       },
       computed: {
+        // 总价
         sumPrice() {
-          return this.fruitList.reduce((sum, item) => sum + item.price * item.num, 0)
+          return this.fruitList.filter(item => item.isChecked === true).reduce((sum, item) => sum + item.price * item.num, 0)
         },
-      }
+        // 总数量
+        sumConut() {
+          return this.fruitList.filter(item => item.isChecked === true).reduce((sum, item) => sum + item.num, 0)
+        },
+        // 全选和反选
+        isAll: {
+          get() {
+            return this.fruitList.every(item => item.isChecked)
+          },
+          set(value) {
+            this.fruitList.forEach(item => item.isChecked = value)
+          }
+        },
+      },
+      watch: {
+          fruitList: {
+            deep: true,
+            handler(newValue) {
+              localStorage.setItem('list', JSON.stringify(newValue))
+            }
+          }
+        }
     })
   </script>
 </body>
