@@ -16,7 +16,7 @@
 </style>
 <body>
   <div class="box">
-    <h3>随机点名</h3>
+    <h3>随机点模块</h3>
     <p>xxx</p>
     <div class="btn">
       <button class="start">开始</button>
@@ -24,7 +24,7 @@
     </div>
   </div>
   <script>
-    const nameData = ['张12','李32','谭13','赵99','吴00','韦43','钱87','覃83']
+    const nameData = ['员工模块','客户模块','储蓄模块','信贷模块']
     function getRandom(num1, num2) {
       return parseInt(Math.random() * (num2 - num1 + 1) + num1)
     }
@@ -36,7 +36,7 @@
       if (nameData.length === 1) {
         btnStart.disabled = true
         btnStop.disabled = true
-        nm.innerHTML = `最后一人${nameData[0]}`
+        nm.innerHTML = `最后一模块${nameData[0]}`
       } else {
         timer = setInterval(function(){
           btnStart.disabled = true

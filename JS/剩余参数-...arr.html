@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>动态参数</title>
+</head>
+<body>
+  <!-- 
+    ...arr: 剩余参数
+    它包含了调用函数时剩余的实参
+    是一个真数组
+  -->
+  <script>
+    function getSum (a, b, ...other) {
+      console.log(other)  // 输出 除第1、2参数意外剩余的实参
+      let sum = 0
+      sum += a + b
+      other.map(item => sum += item)
+      return sum
+    }
+
+    console.log(getSum(1,2,3))  // 6
+    console.log(getSum(1,2,3,4,5,6))  // 21
+    
+  </script>
+</body>
+</html>

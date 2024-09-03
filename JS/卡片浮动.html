@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>卡片浮动</title>
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      min-height: 100vh;
+      background: rgb(69, 69, 69);
+    }
+
+    .container {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      gap: 100px;
+    }
+
+    .card1 {
+      background-color: rgb(50,50,50);
+      height: 300px;
+      width: 200px;
+      border-radius: 20px;
+      transition: all 0.4s;
+    }
+
+    .card1:hover {
+      background-color: rgb(111, 255, 214);
+      box-shadow: 25px 25px 75px rgba(0, 0, 0, 0.25),
+        10px 10px 70px rgba(0, 0, 0, 0.25),
+        inset 5px 5px 20px rgba(255, 255, 255, 0.25),
+        inset -5px -5px 15px rgba(0, 0, 0, 0.75);
+      transform: translateY(-20px);
+    }
+
+    .card2 {
+      background-color: rgb(50,50,50);
+      height: 300px;
+      width: 200px;
+      border-radius: 20px;
+      transition: all 0.4s;
+    }
+
+    .card2:hover {
+      background-color: rgb(255, 111, 111);
+      box-shadow: 25px 25px 75px rgba(0, 0, 0, 0.25),
+        10px 10px 70px rgba(0, 0, 0, 0.25);
+      transform: translateY(-20px);
+    }
+
+    .card3 {
+      background-color: rgb(50,50,50);
+      height: 300px;
+      width: 200px;
+      border-radius: 20px;
+      transition: all 0.4s;
+    }
+
+    .card3:hover {
+      background-color: rgb(233, 111, 255);
+      box-shadow:
+        inset 5px 5px 20px rgba(255, 255, 255, 0.25),
+        inset -5px -5px 15px rgba(0, 0, 0, 0.75);
+      transform: translateY(-20px);
+    }
+  </style>
+</head>
+
+<body>
+  <div class="container">
+    <div class="card2">
+      <div class="title"></div>
+      <div class="content"></div>
+      <a href="#"></a>
+    </div>
+    <div class="card3">
+      <div class="title"></div>
+      <div class="content"></div>
+      <a href="#"></a>
+    </div>
+    <div class="card1">
+      <div class="title"></div>
+      <div class="content"></div>
+      <a href="#"></a>
+    </div>
+  </div>
+</body>
+
+</html>

@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>箭头函数</title>
+</head>
+
+<body>
+  <!-- 
+    1.箭头函数属于表达式函数，因此不存在函数提升
+    2.箭头函数只有一个参数时可以省略小括号
+    3.箭头函数函数体只有一行时可以省略大括号，并自动作为返回值被返回
+    4.加小括号的函数体返回对象字面量表达式
+
+    ps:
+      箭头函数中没有arguments动态参数
+      有...other剩余参数
+
+      箭头函数中没有 this 它只会向上一层沿用this
+      DOM事件回调函数不推荐使用箭头函数
+
+  -->
+  <script>
+    // 基本框架
+    const fn = (x, y) => {
+      return x + y
+    }
+    console.log(fn(1, 2))
+
+    // 省略小括号
+    const fn_xkh = x => {
+      return x * x
+    }
+    console.log(fn_xkh(2))
+
+    // 省略大括号 自动返回
+    const fn_dkh = x => x * x
+    console.log(fn_dkh(3))
+
+    // 返回对象
+    const fn_dx = (id, uname) => ({ id: id, uname: uname })
+    console.log(fn_dx(1001, '张三'))
+    // 这里还能省 对象的 key 与传入的 参数名相同
+    const fn_dx_2 = (id, uname) => ({ id, uname })
+    console.log(fn_dx(1001, '张三'))
+
+    // 剩余参数
+    const fn_sy = (...arr) => {
+      let sum = 0
+      for (const num of arr) { sum += num }
+      return sum
+    }
+    console.log(fn_sy(5, 4, 3, 2, 1))
+
+  </script>
+</body>
+
+</html>

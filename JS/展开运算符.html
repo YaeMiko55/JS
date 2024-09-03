@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>展开运算符</title>
+</head>
+
+<body>
+  <script>
+    const arr = [1, 2, 3, 4, 5]
+
+    // ...arr === 1, 2, 3, 4, 
+    console.log(...arr)  // 1 2 3 4 5
+
+    console.log(Math.max(1,2,3,4,5))
+    console.log(Math.max(...arr))
+    console.log(Math.min(...arr))
+    
+    const arr2 = [0,0,0,...arr]
+    console.log(arr2)  // [0, 0, 0, 1, 2, 3, 4, 5]
+    
+  </script>
+</body>
+
+</html>
