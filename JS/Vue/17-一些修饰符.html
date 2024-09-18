@@ -5,6 +5,12 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Document</title>
+  <style>
+    body {
+      background: rgb(40, 44, 52);
+      color: rgb(171, 171, 191);
+    }
+  </style>
 </head>
 
 <body>
@@ -12,6 +18,7 @@
     <h2>v-model 修饰符 .trim . number</h2>
     <!-- .trim -> 去除首尾空格 -->
     <!-- .number -> 即将输入内容转换为数字型 -->
+    <!-- 注意：.number 不会处理以字符开头的字符串 如 “a123” -->
     姓名：<input v-model.trim="username" type="text" name="username" id="username"><br><br>
     年龄：<input v-model.number="age" type="text" name="age" id="age">
     

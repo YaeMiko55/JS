@@ -8,8 +8,8 @@
 <body>
   <div id="app">
     <img :src="imgUrlList[index]" alt="">
-    <button @click="index--" v-show="index > 0">上一张</button>
-    <button @click="index++" v-show="index < imgUrlList.length-1">下一张</button>
+    <button @click="index--" :disabled="index <= 0">上一张</button>
+    <button @click="index++" :disabled="index >= imgUrlList.length - 1">下一张</button>
   </div>
   <script src="https://cdn.jsdelivr.net/npm/vue@2.7.16/dist/vue.js"></script>
   <script>

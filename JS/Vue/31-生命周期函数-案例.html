@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>生命周期函数案例</title>
+
+</head>
+
+<body>
+  <div class="search">
+    <input type="text" name="inp" id="inp">
+    <button type="button">搜索</button>
+  </div>
+  <div id="app">
+    <ul>
+      <li v-for="(item, index) in list" :key="item.id">
+        <div class="text">
+          <p class="title">{{item.title}}</p>
+          <p class="data">{{item.time}}</p>
+          <p class="author">{{item.source}}</p>
+          
+        </div>
+        <img :src="item.img" alt="">
+      </li>
+    </ul>
+  </div>
+  <script src="https://cdn.jsdelivr.net/npm/vue@2.7.16/dist/vue.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+
+  <script>
+    const app = new Vue({
+      el: '#app',
+      data: {
+        list: [],
+      },
+      // app创建后向后端发送请求接收数据
+      async created () {
+        const res = await axios.get('http://hmajax.itheima.net/api/news')
+        // console.log(res)
+        // 将请求得到的数据同步到list
+        this.list = res.data.data
+        console.log(this.list)
+      },
+
+      // 一进页面立刻获取输入框焦点 dom操作在 mounted 
+      mounted () {
+        document.querySelector('#inp').focus()
+      },
+    })
+  </script>
+
+</body>
+
+</html>

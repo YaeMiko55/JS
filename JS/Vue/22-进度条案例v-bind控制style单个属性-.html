@@ -25,6 +25,8 @@
     width: 400px;
     /* border-radius: 50%; */
     border-radius: 10px;
+    /* border-radius: min(10px, 50%); */
+    /* border-radius: calc(min(100%, 10px)); */
     background-color: skyblue;
 
 
@@ -56,7 +58,7 @@
       methods: {
         minAndMax(pct) {
           if (pct > 100) pct = 100
-          if (pct < 0)   pct = 0
+          if (pct < 5)   pct = 5
           return pct
         }
       }

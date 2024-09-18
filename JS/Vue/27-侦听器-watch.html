@@ -1,10 +1,12 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Document</title>
 </head>
+
 <body>
   <div id="app">
     <input autocomplete="off" v-model="obj.words" type="text" name="txet" id="text">
@@ -14,8 +16,8 @@
   <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
   <script>
     const app = new Vue({
-      el:'#app',
-      data:{
+      el: '#app',
+      data: {
         // words: '',
         // 对象里的变量
         obj: {
@@ -32,22 +34,23 @@
         // 当 words的值 变化时触发
         // newValue 是变化后的值 oldValue 是 变化前的值
         // 变量在对象里时 需加引号 oldValue 可以省略不写
-        'obj.words' (newValue, oldValue) {
+        'obj.words'(newValue, oldValue) {
           // 防抖 -> 延迟一段时间再执行 能有效减轻服务器负担
           clearInterval(this.timer)
-          this.timer = setTimeout(async() => {
+          this.timer = setTimeout(async () => {
             // axios 
             const res = await axios({
               url: 'https://applet-base-api-t.itheima.net/api/translate',
               param: {
                 words: newValue
               }
-          })
-          this.result = res.data.data
+            })
+            this.result = res.data.data
           }, 300)
         }
       }
     })
   </script>
 </body>
+
 </html>

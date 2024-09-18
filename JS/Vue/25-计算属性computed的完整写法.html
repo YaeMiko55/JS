@@ -40,6 +40,7 @@
           // 当 计算属性 被修改复制时 执行 set()
           // 修改的 值 传递给 set 的 形参
           set(value) {
+            // .slice() 字符串分割 参数1：从哪开始 参数2：取多少个字符
             this.firstName = value.slice(0,1)
             this.lastName = value.slice(1)
           }

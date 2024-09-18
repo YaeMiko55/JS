@@ -1,0 +1,238 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>张三记事本</title>
+
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      background-color: #eee;
+    }
+
+    a {
+      text-decoration: none;
+    }
+
+    table,
+    th,
+    td {
+      border-top: 1px solid #ccc;
+      border-bottom: 1px solid #ccc;
+      text-align: left;
+      border-collapse: collapse;
+    }
+
+    tr {
+      background-color: #fafafa;
+    }
+
+    tbody tr:hover {
+      background-color: #aaa;
+    }
+
+    thead tr,
+    tfoot tr {
+      background-color: #ccc;
+
+    }
+
+    th,
+    td {
+      width: 100px;
+      padding: 6px;
+      font-weight: 500;
+    }
+
+    tbody td a {
+      color: red;
+      font-weight: 600;
+    }
+
+    tfoot span {
+      font-weight: 600;
+      font-size: 20px;
+    }
+
+    .red_price {
+      color: red;
+    }
+
+    .echarts {
+      height: 250px;
+      width: 450px;
+    }
+  </style>
+
+</head>
+
+<body>
+
+  <div id="app">
+
+    <div class="add_goods">
+      <input autocomplete="off" v-model.trim="name" type="text" placeholder="请输入商品名称" id="name" name="name">
+      <input autocomplete="off" v-model.number="price" type="text" placeholder="请输入商品价格" id="price" name="price">
+      <button @click="add_goods()" id="add_goods_btn">添加</button>
+    </div>
+
+    <div class="tb">
+      <table>
+
+        <thead>
+          <tr>
+            <th>ID</th>
+            <th>商品名称</th>
+            <th>价格</th>
+            <th>操作</th>
+          </tr>
+        </thead>
+
+        <tbody>
+          <tr v-for="(item, index) in list" :key="item.id">
+            <td>{{item.id}}</td>
+            <td>{{item.name}}</td>
+            <td :class="{red_price: item.price >= 500}">{{item.price.toFixed(2)}}</td>
+            <td>
+              <a href="#" @click="del_goods(item.id)">删除</a>
+            </td>
+          </tr>
+        </tbody>
+
+        <tfoot>
+          <tr>
+            <td colspan="4">
+              <span>消费总价：{{tt_price}}</span>
+            </td>
+          </tr>
+        </tfoot>
+
+      </table>
+    </div>
+
+    <div class="echarts"></div>
+
+  </div>
+
+  <script src="https://cdn.jsdelivr.net/npm/vue@2.7.16/dist/vue.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+  <script src="../echarts.js"></script>
+
+  <script>
+    const app = new Vue({
+      el: '#app',
+      data: {
+        list: [],
+        name: '',
+        price: '',
+      },
+      computed: {
+        // 总价
+        tt_price() {
+          return this.list.reduce((sum, item) => sum + item.price, 0).toFixed(2)
+        },
+      },
+      methods: {
+        // 添加商品
+        async add_goods() {
+          // 非空判断
+          if (!this.name) {
+            alert('请输入商品名称')
+            return
+          }
+          if (typeof this.price !== 'number') {
+            alert('请输入正确的价格')
+            return
+          }
+          // 发送添加请求
+          const res = await axios.post('https://applet-base-api-t.itheima.net/bill', {
+            creator: 'zhangsan7788',
+            name: this.name,
+            price: this.price
+          })
+          // 重新渲染
+          this.getList()
+          // 清空输入框
+          this.name = '',
+          this.price = ''
+        },
+        // 删除商品
+        async del_goods(id) {
+          // 发送删除请求
+          axios.delete(`https://applet-base-api-t.itheima.net/bill/${id}`)
+          // 重新渲染
+          this.getList()
+        },
+
+        // 渲染
+        async getList() {
+          const res = await axios.get('https://applet-base-api-t.itheima.net/bill', {
+            params: {
+              creator: 'zhangsan7788'
+            },
+          })
+          this.list = res.data.data
+
+          // 更新饼图
+          this.my_charts.setOption({
+            series: [
+              {
+                data: this.list.map(item => ({ value: item.price, name: item.name, }))
+              }
+            ]
+          })
+        }
+      },
+      created() {
+        // 初始渲染
+        this.getList()
+      },
+      mounted() {
+        // 饼图
+        this.my_charts = echarts.init(document.querySelector('.echarts'))
+        option = {
+          title: {
+            text: '消费构成饼图',
+            // subtext: 'Fake Data',
+            left: 'center'
+          },
+          tooltip: {
+            trigger: 'item'
+          },
+          // legend: {
+          //   orient: 'vertical',
+          //   left: 'left'
+          // },
+          series: [
+            {
+              name: 'Access From',
+              type: 'pie',
+              radius: '60%',
+              data: [],
+              emphasis: {
+                itemStyle: {
+                  shadowBlur: 10,
+                  shadowOffsetX: 0,
+                  shadowColor: 'rgba(0, 0, 0, 0.5)'
+                }
+              }
+            }
+          ]
+        };
+        this.my_charts.setOption(option)
+      }
+    })
+
+
+
+  </script>
+
+</body>
+
+</html>

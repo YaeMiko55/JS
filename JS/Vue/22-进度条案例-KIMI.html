@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Dark Theme Progress Bar</title>
+  <style>
+    body {
+      background-color: #121212; /* 暗黑背景 */
+      color: #fff; /* 文本颜色为白色 */
+      font-family: Arial, sans-serif;
+      margin: 0;
+      padding: 0;
+    }
+    .progress {
+      margin: 20px auto;
+      width: 400px;
+      height: 20px;
+      border: 3px solid #333; /* 暗灰色边框 */
+      border-radius: 13px;
+      background-color: #333; /* 暗灰色背景 */
+      overflow: hidden; /* 隐藏超出部分 */
+    }
+    .inner {
+      height: 20px;
+      min-width: 20px; /* 设置最小宽度以避免显示问题 */
+      border-radius: calc(max(10px, min(100%, 20px))); /* 调整圆角计算方式 */
+      background-color: #4CAF50; /* 暗绿色进度条颜色 */
+      transition: all .2s;
+    }
+  </style>
+</head>
+
+<body>
+  <div id="app">
+    <div class="progress">
+      <div :style="{ width: minAndMax(percent) + '%' }" class="inner"></div>
+    </div>
+    <input v-model="percent" type="range" name="percentInp" id="percentInp" min="0" max="100">
+  </div>
+
+  <script src="https://cdn.jsdelivr.net/npm/vue@2.7.16/dist/vue.js"></script>
+  <script>
+    const app = new Vue({
+      el: '#app',
+      data: {
+        percent: 1 // 初始进度设置为1%
+      },
+      methods: {
+        minAndMax(pct) {
+          if (pct > 100) pct = 100;
+          if (pct < 0)   pct = 0;
+          return pct;
+        }
+      }
+    });
+  </script>
+</body>
+
+</html>
