@@ -27,6 +27,10 @@ export default {
   },
   methods: {
     handleAdd(plpanName) {
+      if (this.list.length >= 14) {
+        alert('Add failure, the list is full!')
+        return
+      }
       this.list.unshift({
         id: +new Date(),
         name: plpanName,
@@ -45,6 +49,7 @@ export default {
       handler(newValue) {
         localStorage.setItem('list', JSON.stringify(newValue))
       }
+
     }
 
   }
