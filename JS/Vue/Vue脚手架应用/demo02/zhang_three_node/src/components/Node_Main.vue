@@ -40,14 +40,15 @@ export default {
   },
   methods: {
     handleAdd() {
-      // 非空判断
-      if (this.planName.trim === '') {
+      // 非空判断 
+      /* 若在 if 中 对 planName 使用 trim，非空判断会失效 */
+      if (this.planName === '') {
         alert('input something...')
         return
       }
       // 将数据传递给父组件
       this.$emit('add', this.planName)
-      // 清空input
+      // 清空输入框
       this.planName = ''
     },
     // 删除任务
